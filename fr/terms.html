@@ -1,0 +1,123 @@
+<!doctype html><html lang="fr-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Conditions d'utilisation – MapleBook</title><meta name="description" content="MapleBook – Conditions d'utilisation"><link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en-CA" href="../terms.html"><link rel="alternate" hreflang="fr-CA" href="../fr/terms.html">
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+:root { --bg: #F3F2F1; --surface: #FFFFFF; --soft: #F8F7F6; --ink: #1F1B1A; --muted: #67605D; --line: #E0DBD8; --accent: #A62C2B; --accent-soft: #F6E1DF; --warn-soft: #F7EBD7;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif; }
+@media (prefers-color-scheme: dark) { :root { --bg: #141211; --surface: #1C1918; --soft: #231F1E; --ink: #EFE9E7; --muted: #A69E9B; --line: #352F2D; --accent: #F0877D; --accent-soft: #3C2220; --warn-soft: #3A2D16; color-scheme: dark } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+.wrap { max-width: 960px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--line); background: var(--surface); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--display); font-weight: 800; font-size: 1.25rem; }
+.logo { width: 36px; height: 36px; }
+nav a { color: var(--muted); text-decoration: none; margin-left: 18px; font-weight: 600; font-size: .95rem; }
+nav a:hover { color: var(--accent); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; }
+.hero { padding-block: 56px 36px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px; align-items: center; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 0 0 14px; }
+.hero h1 span { color: var(--accent); }
+.hero p.lead { font-size: 1.12rem; color: var(--muted); margin: 0 0 22px; max-width: 46ch; }
+.cta { display: inline-flex; gap: 10px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; padding: 11px 18px; border-radius: 10px; font-weight: 700; text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.card-stack { display: flex; flex-direction: column; gap: 12px; }
+.mini { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 24px rgba(0,0,0,.06); }
+.mini small { display: block; text-transform: uppercase; letter-spacing: .08em; font-size: .72rem; color: var(--muted); font-weight: 700; }
+.mini b { font-family: var(--display); font-size: 1.7rem; }
+.mini em { font-style: normal; font-size: .75rem; background: var(--warn-soft); padding: 1px 8px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
+section { padding-block: 28px; }
+.features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.feature h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.feature p { margin: 0; color: var(--muted); font-size: .95rem; }
+.notice { background: var(--warn-soft); border-radius: 12px; padding: 18px 20px; }
+.notice h2 { margin: 0 0 8px; font-size: 1.2rem; }
+.notice ul { margin: 0; padding-left: 20px; }
+ul.plain { padding-left: 20px; margin: 0 0 8px; }
+.doc { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 26px; max-width: 78ch; }
+.doc h1 { font-size: 1.8rem; margin: 0 0 4px; } .doc h2 { font-size: 1.1rem; margin: 22px 0 4px; }
+.legal-meta { color: var(--muted); font-size: .9rem; margin-top: 0; }
+footer { border-top: 1px solid var(--line); margin-top: 32px; padding-block: 22px 40px; color: var(--muted); font-size: .9rem; }
+footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+footer a { color: var(--muted); }
+a { color: var(--accent); }
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; padding-block: 36px 20px; } .features { grid-template-columns: 1fr; } nav a { margin-left: 12px; } }
+</style></head><body><header class="top"><div class="wrap"><a class="brand" href="index.html"><svg class="logo" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#A62C2B"/><path d="M32 21 C27 17.5 19.5 17 12.5 18.5 V47 C19.5 45.5 27 46 32 49.5 C37 46 44.5 45.5 51.5 47 V18.5 C44.5 17 37 17.5 32 21 Z" fill="#fff"/><path d="M32 21 V49.5" stroke="#E7C9C6" stroke-width="1.2"/><path d="M15.5 25.5 H22 M42 25.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 29.5 H22 M42 29.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 33.5 H22 M42 33.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 37.5 H22 M42 37.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 41.5 H22 M42 41.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M32 22.5 L34.2 27.9 L38.2 26.4 L37.1 31.4 L41.3 32.2 L36.9 35.8 L37.8 37.8 L33.1 37 L33.1 42.5 L30.9 42.5 L30.9 37 L26.2 37.8 L27.1 35.8 L22.7 32.2 L26.9 31.4 L25.8 26.4 L29.8 27.9 Z" fill="#A62C2B"/></svg>
+MapleBook</a><nav><a href="index.html#features">Fonctions</a><a href="index.html#delete-account">Supprimer le compte</a><a href="terms.html">Conditions</a><a href="privacy.html">Confidentialité</a><a href="../terms.html" hreflang="en" lang="en">English</a></nav></div></header><main class="wrap" style="padding-block:28px"><article class="doc"><h1>Conditions d'utilisation</h1>
+<p class="legal-meta">Dernière mise à jour : 18 octobre 2026 · Version 2026-10-18</p>
+<p>Les présentes conditions d'utilisation (les « Conditions ») constituent une entente entre vous et Maple Book Software, une entreprise individuelle enregistrée en Ontario (« nous »), l'éditeur de MapleBook. Elles s'appliquent à l'application Android MapleBook, à notre site Web et à la démo Web (collectivement, le « Service »). En utilisant le Service, vous acceptez les présentes Conditions et notre politique de confidentialité. Si vous ne les acceptez pas, n'utilisez pas le Service.</p>
+
+<h2>1. Qui peut utiliser MapleBook</h2>
+<p>Vous devez avoir au moins 18 ans et être en mesure de conclure une entente qui vous lie pour utiliser le Service.</p>
+
+<h2>2. Ce qu'est MapleBook</h2>
+<p>MapleBook est un outil de budget personnel. Il vous permet d'inscrire vos revenus et vos dépenses, d'importer des relevés bancaires et d'obtenir des estimations de l'impôt sur le revenu canadien, des retenues sur la paie, des sommes à mettre de côté pour l'impôt d'une entreprise, des droits de cotisation aux comptes enregistrés et de plans d'épargne, selon les renseignements que vous fournissez et les taux d'imposition publiés. Il vous permet aussi de partager un budget de ménage avec les personnes de votre choix.</p>
+
+<h2>3. Aucun conseil</h2>
+<p>MapleBook fournit des estimations à titre d'information générale et de budgétisation seulement. Rien dans le Service ne constitue un conseil fiscal, juridique, comptable, financier ou en placement, et l'utilisation du Service ne crée aucune relation professionnelle ou de conseil avec nous. MapleBook ne recommande aucun produit financier, compte, cotisation ou ligne de conduite. Avant de prendre des décisions fiscales, de placement, liées au REER, au CELIAPP ou au CELI, ou toute autre décision financière, consultez un professionnel qualifié, comme un comptable, un fiscaliste ou un conseiller financier autorisé.</p>
+
+<h2>4. Les estimations peuvent être erronées</h2>
+<p>Les résultats peuvent être inexacts ou incomplets. Ils dépendent entièrement des renseignements que vous saisissez et des hypothèses intégrées au Service, et peuvent ne pas refléter l'ensemble de votre situation, les modifications récentes de la loi ou des taux qui changent en cours d'année. Vos impôts, remboursements, soldes dus, droits de cotisation et plafonds réels sont établis par l'Agence du revenu du Canada (et par Revenu Québec pour les résidents du Québec). Confirmez toujours les montants à l'aide de votre avis de cotisation, de Mon dossier de l'ARC, de Revenu Québec ou d'un professionnel. Les montants d'impôt provincial du Québec présentés dans le Service sont des estimations simplifiées.</p>
+
+<h2>5. Vos responsabilités</h2>
+<ul>
+  <li>Vous êtes responsable de l'exactitude des renseignements que vous saisissez et de la vérification des transactions importées et catégorisées.</li>
+  <li>Vous êtes seul responsable de vos décisions financières, fiscales et de placement et de leurs résultats, y compris des pénalités ou intérêts imposés par les autorités fiscales (par exemple, pour une cotisation excédentaire à un compte enregistré ou des acomptes provisionnels insuffisants).</li>
+  <li>Vous êtes responsable de la sécurité de votre appareil, du mot de passe de votre compte et de vos sauvegardes. Les données stockées seulement sur votre appareil peuvent être perdues si l'appareil est perdu ou réinitialisé ou si l'application est désinstallée. Utilisez régulièrement la fonction de sauvegarde.</li>
+  <li>Vous êtes responsable de ce que vous choisissez de partager avec un ménage, et vous acceptez de ne partager des renseignements sur d'autres personnes qu'avec leur permission.</li>
+  <li>Vous acceptez de ne pas utiliser le Service de manière abusive, de ne pas nuire à son fonctionnement et de ne pas l'utiliser à des fins illégales.</li>
+</ul>
+
+<h2>6. Importation de relevés</h2>
+<p>Lorsque vous importez un relevé bancaire ou de carte de crédit, MapleBook lit le fichier pour suggérer des transactions et des catégories. La lecture et la catégorisation automatiques peuvent être erronées ou incomplètes. Vérifiez chaque transaction importée avant de vous y fier.</p>
+
+<h2>7. Abonnement MapleBook Plus</h2>
+<p><b>Fonctions gratuites.</b> Le budget personnel de base est gratuit : inscription de vos transactions, catégories, sommaires mensuels et annuels, soldes bancaires, objectifs d'épargne et sauvegardes.</p>
+<p><b>MapleBook Plus.</b> Tout le reste, y compris les ménages, l'importation de relevés, les estimations d'impôt (toujours avec les taux de l'année d'imposition en cours), la calculatrice de paie, les retenues d'entreprise, les scénarios, la planification des comptes enregistrés et les outils de planification, nécessite un abonnement MapleBook Plus. MapleBook Plus coûte 9,99 $ CA par mois ou 99,99 $ CA par année, plus les taxes de vente applicables indiquées par Google Play avant l'achat. Les prix peuvent changer; Google Play vous en avise à l'avance et, lorsque c'est requis, vous demande d'accepter un prix plus élevé avant qu'il s'applique.</p>
+<p><b>Essai gratuit.</b> Les nouveaux abonnés peuvent obtenir un essai gratuit de 7 jours, selon ce qu'offre Google Play. Si vous n'annulez pas avant la fin de l'essai, l'abonnement commence et le prix du forfait choisi vous est facturé.</p>
+<p><b>Renouvellement automatique et annulation.</b> Les abonnements se renouvellent automatiquement à la fin de chaque mois ou de chaque année jusqu'à ce que vous les annuliez. Vous pouvez annuler en tout temps dans Google Play (Paiements et abonnements → Abonnements) ou à partir des Paramètres de MapleBook. Lorsque vous annulez, MapleBook Plus reste actif jusqu'à la fin de la période payée, et aucun autre montant ne vous est facturé. Sauf si la loi ou les politiques de remboursement de Google Play l'exigent, les paiements ne sont pas remboursés pour les périodes partielles.</p>
+<p><b>Paiements.</b> Les abonnements sont vendus et facturés par Google Play selon ses conditions. Si un paiement de renouvellement échoue, Google Play peut le réessayer pendant une certaine période (un délai de grâce, pendant lequel MapleBook Plus reste actif), puis suspendre l'abonnement, ce qui met MapleBook Plus en pause jusqu'à ce que le paiement soit réglé. Un abonnement remboursé ou révoqué ne donne plus accès à MapleBook Plus.</p>
+<p><b>Ménages.</b> Un seul abonnement MapleBook Plus couvre tous les membres du ménage de l'abonné pendant qu'ils en font partie. Les membres profitent de MapleBook Plus par le ménage seulement tant qu'ils en sont membres et qu'une personne du ménage a un abonnement actif (ou un accès gratuit que nous offrons). Sinon, le ménage passe en lecture seule : les membres peuvent encore le consulter, inscrire des remboursements, l'exporter et le quitter.</p>
+<p><b>Accès gratuit.</b> Nous pouvons offrir à certaines personnes (par exemple des testeurs ou des évaluateurs) un accès gratuit à MapleBook Plus jusqu'à une date que nous fixons. Il prend fin à cette date, à moins que nous le prolongions.</p>
+<p>Les abonnements sont des licences d'utilisation de fonctions du Service; ils ne sont pas transférables. Ils sont liés au compte Google utilisé pour les acheter et sont rétablis sur un nouvel appareil connecté à ce compte (Paramètres → Rétablir l'abonnement).</p>
+
+<h2>8. Ménages</h2>
+<p>Un ménage est un espace partagé par un maximum de 6 personnes qui ont chacune un compte MapleBook. La personne qui le crée en est la propriétaire. Toute personne qui a le code d'invitation du ménage peut s'y joindre jusqu'à ce qu'il soit complet; la propriétaire peut changer le code et retirer des membres. Tout membre peut quitter le ménage en tout temps.</p>
+<p>Les membres peuvent voir et modifier tout ce qui est partagé avec le ménage : les transactions, factures, objectifs d'épargne et remboursements partagés, ainsi que le nom des personnes qui les ont ajoutés ou payés. Votre budget personnel n'est jamais partagé. Lorsque vous quittez le ménage ou en êtes retiré, ce que vous avez partagé reste avec le ménage, et vous ne pouvez plus le voir.</p>
+<p>Les montants à régler sont des calculs fondés sur ce que les membres saisissent et sur le partage choisi par le ménage. Ce ne sont ni une facture, ni un avis de recouvrement, ni une obligation juridique, et MapleBook ne transfère pas d'argent entre les personnes.</p>
+
+<h2>9. Comptes et synchronisation</h2>
+<p>Vous avez besoin d'un compte seulement pour utiliser un ménage ou pour synchroniser vos appareils. Gardez votre mot de passe confidentiel. Vous pouvez vous déconnecter en tout temps et supprimer votre compte dans l'application (Paramètres → Compte et synchronisation → Supprimer le compte) ou de la façon décrite sur notre site Web. La suppression de votre compte n'annule pas un abonnement MapleBook Plus : annulez-le dans Google Play.</p>
+
+<h2>10. Notre contenu et licence</h2>
+<p>Nous vous accordons une licence personnelle, non exclusive, non transférable et révocable d'utilisation du Service pour votre propre budget personnel, à des fins non commerciales. Le Service, sa conception, ses textes et ses logiciels nous appartiennent ou appartiennent à nos concédants de licence. Vous demeurez propriétaire des données que vous saisissez.</p>
+
+<h2>11. Aucune garantie</h2>
+<p>Dans toute la mesure permise par la loi, le Service est fourni « tel quel » et « selon sa disponibilité », sans garantie d'aucune sorte, expresse ou implicite, y compris toute garantie d'exactitude, d'exhaustivité, d'adaptation à un usage particulier, d'absence de contrefaçon, ou de fonctionnement ininterrompu ou sans erreur.</p>
+
+<h2>12. Limitation de responsabilité</h2>
+<p>Dans toute la mesure permise par la loi, nous (ainsi que nos propriétaires, employés et fournisseurs) ne serons pas responsables des dommages indirects, accessoires, spéciaux, consécutifs ou punitifs, ni de toute perte de profits, d'économies, de remboursements, d'avantages fiscaux, de données ou d'occasions, ni d'impôts, de pénalités ou d'intérêts, découlant de votre utilisation du Service ou de la confiance que vous y accordez, ou s'y rapportant, même si nous avions été informés de la possibilité de tels dommages. Notre responsabilité totale pour toute réclamation relative au Service est limitée au plus élevé des montants suivants : la somme que vous nous avez versée pour le Service au cours des 12 mois précédant la réclamation, ou 50 $ CA.</p>
+
+<h2>13. Vos droits de consommateur</h2>
+<p>Certaines lois, dont les lois de protection du consommateur du Québec et d'autres provinces, ne permettent pas d'exclure ou de limiter certaines garanties ou responsabilités. Rien dans les présentes Conditions ne limite les droits que vous confèrent des lois auxquelles on ne peut renoncer ni déroger par contrat. Lorsque ces lois s'appliquent, nos exclusions et limitations ne s'appliquent que dans la mesure permise.</p>
+
+<h2>14. Indemnisation</h2>
+<p>Dans la mesure permise par la loi, vous acceptez de nous indemniser à l'égard des réclamations, pertes et frais (y compris des honoraires juridiques raisonnables) découlant d'une utilisation abusive du Service ou d'un manquement aux présentes Conditions.</p>
+
+<h2>15. Modifications</h2>
+<p>Nous pouvons mettre à jour le Service et les présentes Conditions. En cas de modifications importantes, nous mettrons à jour la date de « Dernière mise à jour » et vous demanderons de consulter et d'accepter les Conditions mises à jour dans l'application avant de continuer à l'utiliser.</p>
+
+<h2>16. Fin de l'utilisation</h2>
+<p>Vous pouvez cesser d'utiliser le Service en tout temps et supprimer vos données à partir de l'application. Nous pouvons suspendre ou mettre fin à l'accès au Service si vous enfreignez les présentes Conditions ou si nous cessons de l'offrir.</p>
+
+<h2>17. Droit applicable</h2>
+<p>Les présentes Conditions sont régies par les lois de la province de l'Ontario et les lois fédérales du Canada qui s'y appliquent. Sous réserve de l'article 13, vous et nous reconnaissons la compétence des tribunaux de l'Ontario.</p>
+
+<h2>18. Langue</h2>
+<p>Les présentes Conditions sont offertes en français et en anglais. Les deux versions ont la même valeur. Vous pouvez choisir la langue de l'application dans Paramètres.</p>
+
+<h2>19. Coordonnées</h2>
+<p>Maple Book Software · <a href="mailto:support@maplebooksoftware.com">support@maplebooksoftware.com</a> · <a href="https://maplebooksoftware.com">maplebooksoftware.com</a></p></article></main><footer><div class="wrap"><span>© 2026 Maple Book Software. MapleBook fournit des estimations à des fins de budget seulement; il ne s'agit pas de conseils fiscaux, juridiques, comptables, financiers ou en placement.</span><span><a href="terms.html">Conditions d'utilisation</a> · <a href="privacy.html">Politique de confidentialité</a> · support@maplebooksoftware.com</span></div></footer></body></html>

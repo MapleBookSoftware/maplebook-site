@@ -1,0 +1,120 @@
+<!doctype html><html lang="en-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Privacy Policy – MapleBook</title><meta name="description" content="MapleBook – Privacy Policy"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en-CA" href="privacy.html"><link rel="alternate" hreflang="fr-CA" href="fr/privacy.html">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root { --bg: #F3F2F1; --surface: #FFFFFF; --soft: #F8F7F6; --ink: #1F1B1A; --muted: #67605D; --line: #E0DBD8; --accent: #A62C2B; --accent-soft: #F6E1DF; --warn-soft: #F7EBD7;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif; }
+@media (prefers-color-scheme: dark) { :root { --bg: #141211; --surface: #1C1918; --soft: #231F1E; --ink: #EFE9E7; --muted: #A69E9B; --line: #352F2D; --accent: #F0877D; --accent-soft: #3C2220; --warn-soft: #3A2D16; color-scheme: dark } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+.wrap { max-width: 960px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--line); background: var(--surface); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--display); font-weight: 800; font-size: 1.25rem; }
+.logo { width: 36px; height: 36px; }
+nav a { color: var(--muted); text-decoration: none; margin-left: 18px; font-weight: 600; font-size: .95rem; }
+nav a:hover { color: var(--accent); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; }
+.hero { padding-block: 56px 36px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px; align-items: center; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 0 0 14px; }
+.hero h1 span { color: var(--accent); }
+.hero p.lead { font-size: 1.12rem; color: var(--muted); margin: 0 0 22px; max-width: 46ch; }
+.cta { display: inline-flex; gap: 10px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; padding: 11px 18px; border-radius: 10px; font-weight: 700; text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.card-stack { display: flex; flex-direction: column; gap: 12px; }
+.mini { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 24px rgba(0,0,0,.06); }
+.mini small { display: block; text-transform: uppercase; letter-spacing: .08em; font-size: .72rem; color: var(--muted); font-weight: 700; }
+.mini b { font-family: var(--display); font-size: 1.7rem; }
+.mini em { font-style: normal; font-size: .75rem; background: var(--warn-soft); padding: 1px 8px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
+section { padding-block: 28px; }
+.features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.feature h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.feature p { margin: 0; color: var(--muted); font-size: .95rem; }
+.notice { background: var(--warn-soft); border-radius: 12px; padding: 18px 20px; }
+.notice h2 { margin: 0 0 8px; font-size: 1.2rem; }
+.notice ul { margin: 0; padding-left: 20px; }
+ul.plain { padding-left: 20px; margin: 0 0 8px; }
+.doc { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 26px; max-width: 78ch; }
+.doc h1 { font-size: 1.8rem; margin: 0 0 4px; } .doc h2 { font-size: 1.1rem; margin: 22px 0 4px; }
+.legal-meta { color: var(--muted); font-size: .9rem; margin-top: 0; }
+footer { border-top: 1px solid var(--line); margin-top: 32px; padding-block: 22px 40px; color: var(--muted); font-size: .9rem; }
+footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+footer a { color: var(--muted); }
+a { color: var(--accent); }
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; padding-block: 36px 20px; } .features { grid-template-columns: 1fr; } nav a { margin-left: 12px; } }
+</style></head><body><header class="top"><div class="wrap"><a class="brand" href="index.html"><svg class="logo" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#A62C2B"/><path d="M32 21 C27 17.5 19.5 17 12.5 18.5 V47 C19.5 45.5 27 46 32 49.5 C37 46 44.5 45.5 51.5 47 V18.5 C44.5 17 37 17.5 32 21 Z" fill="#fff"/><path d="M32 21 V49.5" stroke="#E7C9C6" stroke-width="1.2"/><path d="M15.5 25.5 H22 M42 25.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 29.5 H22 M42 29.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 33.5 H22 M42 33.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 37.5 H22 M42 37.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 41.5 H22 M42 41.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M32 22.5 L34.2 27.9 L38.2 26.4 L37.1 31.4 L41.3 32.2 L36.9 35.8 L37.8 37.8 L33.1 37 L33.1 42.5 L30.9 42.5 L30.9 37 L26.2 37.8 L27.1 35.8 L22.7 32.2 L26.9 31.4 L25.8 26.4 L29.8 27.9 Z" fill="#A62C2B"/></svg>
+MapleBook</a><nav><a href="index.html#features">Features</a><a href="index.html#delete-account">Delete account</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="fr/privacy.html" hreflang="fr" lang="fr">Français</a></nav></div></header><main class="wrap" style="padding-block:28px"><article class="doc"><h1>Privacy Policy</h1>
+<p class="legal-meta">Last updated: October 18, 2026 · Version 2026-10-18</p>
+<p>This policy explains what information MapleBook handles, where it is stored, and the choices you have. Maple Book Software, a sole proprietorship registered in Ontario ("we") is responsible for personal information under our control. Our privacy officer is the owner of Maple Book Software, reachable at support@maplebooksoftware.com.</p>
+
+<h2>1. The short version</h2>
+<ul>
+  <li>Using MapleBook for your own budget needs no account: everything you enter stays on your device.</li>
+  <li>If you sign in (needed for households and to sync between your devices), your personal data is stored privately with our hosting provider in Canada. Nobody else can see it, including other members of your household.</li>
+  <li>Only what you put in a household is shared, and only with its members. You choose what they see about your income.</li>
+  <li>Bank statements you import are read on your device. The files are not uploaded to us.</li>
+  <li>We do not sell your information, show ads, or use third-party advertising or analytics trackers.</li>
+  <li>Payments are handled by Google Play. We never see your card details.</li>
+</ul>
+
+<h2>2. Information you enter</h2>
+<p>To provide budgeting and estimates, MapleBook stores the information you choose to enter, which can include income, expenses, transaction descriptions and notes, categories (including names of categories you create), account balances, pay details, province or territory of residence, whether you have a spouse or partner and their estimated income, tax-related amounts (such as RRSP, FHSA and TFSA room and contributions), savings goals and their names, and app settings. This information is stored on your device in the app's private storage, and also in your account if you sign in (section 4). On Android, MapleBook is excluded from Google's automatic device backups and phone-to-phone transfers, so your data is not copied to a Google account; use an account or Export backup to move it.</p>
+
+<h2>3. Bank statement imports</h2>
+<p>When you choose a statement file (PDF, CSV or OFX), MapleBook reads it on your device to suggest transactions. Only the transactions you confirm are saved. The original file is not stored by MapleBook and is not sent to us.</p>
+
+<h2>4. Accounts and sync (optional)</h2>
+<p>You don't need an account to use MapleBook for your own budget. An account is needed to use a household or to sync between your devices. When you create one, we collect your email address and a password (stored only in hashed form by our provider), and our provider assigns the account an ID. Your personal MapleBook data described in section 2 is then stored with our hosting provider, Supabase, in a database located in Canada (Central), so it can sync between your devices. Access rules on the server make sure only you can read or change your personal data, including when you are in a household. Data is encrypted in transit (HTTPS/TLS) and stored encrypted by our provider.</p>
+<p>You can sign out at any time and choose whether to keep a copy on that device. You can delete your account in the app (Settings → Account and sync → Delete account, then type DELETE to confirm), which permanently deletes the account and the MapleBook data stored with it and removes you from your household. You can also ask us to delete it by emailing support@maplebooksoftware.com from the address on the account. Instructions are on our website at https://maplebooksoftware.com/#delete-account.</p>
+
+<h2>5. Households</h2>
+<p>If you create or join a household, the following is shared with its members (up to 6 people) and stored with Supabase: the household's name; each member's display name, role (owner or member) and the date they joined or left; the shared transactions, bills, savings goals and settle-up payments members add, with who added, changed or paid each one; and what each member chooses to share about their income.</p>
+<p>For income, each member chooses one of: their monthly take-home pay (shown to members), "just a total" (added to the household total but never shown on its own; the total is hidden from anyone who could work out one person's figure from it, for example in a household of two; someone who notes the total before and after a member leaves or is removed can still work out that member's figure) or nothing. If the household splits costs by income, each member enters an income figure that only they can see; other members see only the resulting percentages, but a member who knows their own figure may be able to work out others' figures from those percentages.</p>
+<p>Members never see each other's personal transactions, balances, settings or tax estimates. When you leave or are removed, you can no longer see the household, and its members no longer see your income choices. What you added to the household stays with it, with your display name on those items. When the last member leaves, the household and everything in it is deleted.</p>
+
+<h2>6. MapleBook Plus and payments</h2>
+<p>MapleBook Plus is sold through Google Play, which processes payments. Google provides the app with what it needs to confirm and restore your subscription (such as a purchase token, the plan and its status). We do not receive your payment card or billing details. Google's handling of your information is described in Google's privacy policy.</p>
+<p>If you are signed in, we store your subscription's status with your account (the purchase token, plan, status, trial and renewal dates, and order number) and check it with Google regularly, so your MapleBook Plus works on your devices and covers your household. Other household members see only that the household has MapleBook Plus and whose subscription provides it.</p>
+<p>Google Play gives us order and sales reports so we can handle refunds, sales taxes and support requests. These include the order number, the product, the price and, for tax purposes, the buyer's province or state, country and postal code; where Google is the merchant of record for a sale, they include only the country. They do not include your payment card details or your MapleBook data.</p>
+<p>If we give you free MapleBook Plus access (for example as a tester), we keep your email address and the end date of that access.</p>
+
+<h2>7. Information collected automatically</h2>
+<p>MapleBook does not use advertising or analytics trackers. The services the app and our website connect to, and when:</p>
+<ul>
+  <li><b>Android app:</b> our hosting provider (Supabase, in Canada), only if you sign in; Google Play, for subscriptions. Fonts and the PDF reader are built into the app, and the app blocks connections to anything else.</li>
+  <li><b>Our website and web demo:</b> hosted by GitHub Pages (GitHub, Inc., United States), which receives standard web server information such as your IP address. The web demo also loads typefaces from Google Fonts and the PDF reader from cdnjs (Cloudflare), which receive technical information such as your IP address. The website and demo do not use trackers, and nothing you type in the demo is saved.</li>
+  <li><b>Email:</b> messages to support@maplebooksoftware.com are forwarded to and stored in our Google (Gmail) mailbox.</li>
+</ul>
+
+<h2>8. How we use information</h2>
+<p>We use information only to provide the Service: storing and syncing your data if you sign in, running households you join, checking and restoring subscriptions, responding to support requests, and keeping the Service secure. We do not use your financial information for marketing, and we do not sell, rent or trade personal information.</p>
+
+<h2>9. Sharing</h2>
+<p>We share information only with the members of a household you join (as described above) and with service providers that help us run the Service (Supabase for accounts, sync and households; Google Play for subscriptions; GitHub for our website; Google for email), under agreements that require them to protect it, or where required by law. Google and GitHub may process information outside Canada (for example in the United States), where it may be subject to the laws of that jurisdiction. Supabase stores your account data in Canada.</p>
+
+<h2>10. Retention and deletion</h2>
+<p>Data on your device stays until you delete it in the app (Settings → Your data → Delete everything) or uninstall the app. Account data is kept while your account exists. When you delete your account, it is deleted right away from the live database and from our provider's backups within 30 days. Subscription records are deleted with your account. Support emails are kept as long as needed to respond and for our records. Free-access entries are kept until we remove them from the list.</p>
+
+<h2>11. Security</h2>
+<p>We use reasonable safeguards appropriate to the sensitivity of financial information, including encryption in transit, per-account and per-household access rules on the server, and not storing secret keys in the app. On Android you can turn on an app lock that asks for your fingerprint, face or phone PIN; while it is on, the app's screen is hidden in the recent-apps view. Backup files you export contain your financial data; you can protect them with a password (they are then encrypted with AES-256), and if you lose that password we cannot recover the backup. No method of storage or transmission is completely secure. Protect your device with a screen lock and keep backups private.</p>
+
+<h2>12. Age</h2>
+<p>MapleBook is intended for people 18 and older. We do not knowingly collect information from anyone under 18.</p>
+
+<h2>13. Your rights</h2>
+<p>You can access, correct and delete your information in the app at any time, export a backup, change what you share with a household, leave a household, sign out, and delete your account. You can also contact us to request access to or correction of personal information we hold, or to make a privacy complaint. If you are not satisfied with our response, you may contact the Office of the Privacy Commissioner of Canada, or, in Quebec, the Commission d'accès à l'information.</p>
+
+<h2>14. Privacy incidents</h2>
+<p>If a privacy breach involving your information creates a real risk of significant harm, we will notify you and the appropriate regulators as required by law.</p>
+
+<h2>15. Changes</h2>
+<p>We will update this policy when our practices change, update the "Last updated" date, and ask you to review material changes in the app.</p>
+
+<h2>16. Language</h2>
+<p>This policy is available in English and French. Both versions are equally authoritative.</p>
+
+<h2>17. Contact</h2>
+<p>Maple Book Software · <a href="mailto:support@maplebooksoftware.com">support@maplebooksoftware.com</a> · <a href="https://maplebooksoftware.com">maplebooksoftware.com</a></p></article></main><footer><div class="wrap"><span>© 2026 Maple Book Software. MapleBook provides estimates for budgeting only; it is not tax, legal, accounting, financial or investment advice.</span><span><a href="terms.html">Terms of Use</a> · <a href="privacy.html">Privacy Policy</a> · support@maplebooksoftware.com</span></div></footer></body></html>

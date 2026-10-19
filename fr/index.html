@@ -1,0 +1,84 @@
+<!doctype html><html lang="fr-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MapleBook – budget et estimations d'impôt pour les Canadiens</title><meta name="description" content="MapleBook est une application de budget pour les Canadiens qui ont un emploi, une entreprise d'appoint ou les deux. Suivez votre argent, estimez vos impôts et planifiez, en toute confidentialité sur votre téléphone."><link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en-CA" href="../index.html"><link rel="alternate" hreflang="fr-CA" href="../fr/index.html">
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+:root { --bg: #F3F2F1; --surface: #FFFFFF; --soft: #F8F7F6; --ink: #1F1B1A; --muted: #67605D; --line: #E0DBD8; --accent: #A62C2B; --accent-soft: #F6E1DF; --warn-soft: #F7EBD7;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif; }
+@media (prefers-color-scheme: dark) { :root { --bg: #141211; --surface: #1C1918; --soft: #231F1E; --ink: #EFE9E7; --muted: #A69E9B; --line: #352F2D; --accent: #F0877D; --accent-soft: #3C2220; --warn-soft: #3A2D16; color-scheme: dark } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+.wrap { max-width: 960px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--line); background: var(--surface); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--display); font-weight: 800; font-size: 1.25rem; }
+.logo { width: 36px; height: 36px; }
+nav a { color: var(--muted); text-decoration: none; margin-left: 18px; font-weight: 600; font-size: .95rem; }
+nav a:hover { color: var(--accent); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; }
+.hero { padding-block: 56px 36px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px; align-items: center; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 0 0 14px; }
+.hero h1 span { color: var(--accent); }
+.hero p.lead { font-size: 1.12rem; color: var(--muted); margin: 0 0 22px; max-width: 46ch; }
+.cta { display: inline-flex; gap: 10px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; padding: 11px 18px; border-radius: 10px; font-weight: 700; text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.card-stack { display: flex; flex-direction: column; gap: 12px; }
+.mini { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 24px rgba(0,0,0,.06); }
+.mini small { display: block; text-transform: uppercase; letter-spacing: .08em; font-size: .72rem; color: var(--muted); font-weight: 700; }
+.mini b { font-family: var(--display); font-size: 1.7rem; }
+.mini em { font-style: normal; font-size: .75rem; background: var(--warn-soft); padding: 1px 8px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
+section { padding-block: 28px; }
+.features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.feature h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.feature p { margin: 0; color: var(--muted); font-size: .95rem; }
+.notice { background: var(--warn-soft); border-radius: 12px; padding: 18px 20px; }
+.notice h2 { margin: 0 0 8px; font-size: 1.2rem; }
+.notice ul { margin: 0; padding-left: 20px; }
+ul.plain { padding-left: 20px; margin: 0 0 8px; }
+.doc { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 26px; max-width: 78ch; }
+.doc h1 { font-size: 1.8rem; margin: 0 0 4px; } .doc h2 { font-size: 1.1rem; margin: 22px 0 4px; }
+.legal-meta { color: var(--muted); font-size: .9rem; margin-top: 0; }
+footer { border-top: 1px solid var(--line); margin-top: 32px; padding-block: 22px 40px; color: var(--muted); font-size: .9rem; }
+footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+footer a { color: var(--muted); }
+a { color: var(--accent); }
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; padding-block: 36px 20px; } .features { grid-template-columns: 1fr; } nav a { margin-left: 12px; } }
+</style></head><body><header class="top"><div class="wrap"><a class="brand" href="index.html"><svg class="logo" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#A62C2B"/><path d="M32 21 C27 17.5 19.5 17 12.5 18.5 V47 C19.5 45.5 27 46 32 49.5 C37 46 44.5 45.5 51.5 47 V18.5 C44.5 17 37 17.5 32 21 Z" fill="#fff"/><path d="M32 21 V49.5" stroke="#E7C9C6" stroke-width="1.2"/><path d="M15.5 25.5 H22 M42 25.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 29.5 H22 M42 29.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 33.5 H22 M42 33.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 37.5 H22 M42 37.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 41.5 H22 M42 41.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M32 22.5 L34.2 27.9 L38.2 26.4 L37.1 31.4 L41.3 32.2 L36.9 35.8 L37.8 37.8 L33.1 37 L33.1 42.5 L30.9 42.5 L30.9 37 L26.2 37.8 L27.1 35.8 L22.7 32.2 L26.9 31.4 L25.8 26.4 L29.8 27.9 Z" fill="#A62C2B"/></svg>
+MapleBook</a><nav><a href="index.html#features">Fonctions</a><a href="index.html#delete-account">Supprimer le compte</a><a href="terms.html">Conditions</a><a href="privacy.html">Confidentialité</a><a href="../index.html" hreflang="en" lang="en">English</a></nav></div></header>
+<main class="wrap">
+  <div class="hero">
+    <div><h1>Le budget des Canadiens qui ont un emploi, <span>une entreprise d'appoint, ou les deux.</span></h1>
+      <p class="lead">MapleBook réunit vos revenus et vos dépenses et présente des estimations de votre impôt, des retenues sur votre paie et du montant à mettre de côté sur votre revenu d'entreprise, selon les taux publiés de chaque province.</p>
+      <div class="cta"><a class="btn primary" href="#download">Obtenir MapleBook</a><a class="btn" href="#features">Voir les fonctions</a></div></div>
+    <div class="card-stack" aria-hidden="true">
+      <div class="mini"><small>À mettre de côté ce mois-ci</small><b>595,57 $</b><em>estimation</em></div>
+      <div class="mini"><small>Déclaration de revenus 2026 estimative</small><b>Remboursement 1 240 $</b><em>estimation</em></div>
+      <div class="mini"><small>Reste après la mise de côté · octobre</small><b>2 738 $</b><em>estimation</em></div>
+    </div>
+  </div>
+  <section id="features"><h2>Ce que fait l'application</h2><div class="features">
+    <div class="feature"><h3>Budget au quotidien</h3><p>Inscrivez vos revenus et vos dépenses, créez vos propres catégories et voyez chaque mois, chaque année et l'évolution d'une année à l'autre. Gratuit.</p></div>
+    <div class="feature"><h3>Objectifs d'épargne</h3><p>Fixez un montant et une date pour ce que vous voulez vous offrir, ajoutez-y au fil du temps et voyez combien mettre de côté chaque mois. Gratuit.</p></div>
+    <div class="feature"><h3>Ménages</h3><p>Faites votre budget à deux ou en famille (jusqu'à 6 personnes) : dépenses, factures et objectifs partagés, qui a payé et qui doit combien, à parts égales, selon le revenu ou à votre façon. Votre budget personnel reste privé, et vous choisissez ce que les autres voient de votre revenu. Fait partie de MapleBook Plus.</p></div>
+    <div class="feature"><h3>Importation de relevés</h3><p>Lisez sur votre téléphone les relevés PDF, CSV et OFX des banques canadiennes, puis vérifiez chaque transaction avant qu'elle soit enregistrée. Fait partie de MapleBook Plus.</p></div>
+    <div class="feature"><h3>Estimations d'impôt</h3><p>Estimations depuis le début de l'année et pour l'année complète de l'impôt fédéral et provincial ou territorial, du RPC et de l'AE, vérifiées par rapport aux formules de retenues sur la paie 2026 de l'ARC dans une série de tests couvrant les 13 provinces et territoires. L'impôt provincial du Québec est une estimation simplifiée. Fait partie de MapleBook Plus.</p></div>
+    <div class="feature"><h3>Paie et revenu d'appoint</h3><p>Voyez les retenues estimatives sur chaque paie, ainsi qu'une estimation de l'impôt et du RPC sur le revenu d'entreprise que personne ne retient pour vous.</p></div>
+    <div class="feature"><h3>REER, CELIAPP et CELI</h3><p>Suivez les droits de cotisation que vous inscrivez à partir des données de l'ARC et comparez côte à côte l'effet fiscal estimatif de chaque compte, sans classement.</p></div>
+    <div class="feature"><h3>Outils de planification</h3><p>Testez une nouvelle dépense par rapport à votre flux de trésorerie, planifiez un gros achat selon votre paie nette et voyez combien de temps votre épargne durerait si un revenu s'arrêtait. Fait partie de MapleBook Plus.</p></div>
+  </div></section>
+  <section><div class="notice"><h2>Estimations seulement</h2><ul>
+    <li>MapleBook fournit des estimations à titre d'information générale et de budgétisation seulement. Il ne s'agit pas de conseils fiscaux, juridiques, comptables, financiers ou en placement.</li>
+    <li>Les résultats dépendent des renseignements que vous saisissez et peuvent être inexacts ou incomplets. Vos impôts et droits de cotisation réels sont établis par l'ARC (et par Revenu Québec au Québec).</li>
+    <li>Consultez un professionnel qualifié avant de prendre des décisions fiscales, de placement ou liées aux comptes enregistrés.</li>
+  </ul></div></section>
+  <section id="privacy-summary"><h2>Vos données restent chez vous</h2><ul class="plain"><li>Utiliser MapleBook pour votre propre budget ne demande aucun compte : tout ce que vous saisissez reste sur votre appareil.</li><li>Si vous vous connectez (nécessaire pour les ménages et pour synchroniser vos appareils), vos données personnelles sont stockées de façon privée chez notre fournisseur d'hébergement, au Canada. Personne d'autre ne peut les voir, y compris les autres membres de votre ménage.</li><li>Seul ce que vous ajoutez à un ménage est partagé, et seulement avec ses membres. Vous choisissez ce qu'ils voient de votre revenu.</li><li>Les relevés bancaires que vous importez sont lus sur votre appareil. Les fichiers ne nous sont pas transmis.</li><li>Nous ne vendons pas vos renseignements, n'affichons pas de publicité et n'utilisons pas de traceurs publicitaires ou analytiques de tiers.</li><li>Les paiements sont traités par Google Play. Nous ne voyons jamais les détails de votre carte.</li></ul><p><a href="privacy.html">Lire la politique de confidentialité</a>.</p></section>
+  <section id="download"><h2>Téléchargement</h2><p>MapleBook arrive bientôt sur Google Play. Téléchargement gratuit, avec le budget au quotidien, les objectifs d'épargne et les sauvegardes gratuits. MapleBook Plus ajoute les ménages, l'importation de relevés, les estimations d'impôt et les outils de planification pour 9,99 $ CA par mois ou 99,99 $ CA par année, avec un essai gratuit de 7 jours pour les nouveaux abonnés. L'abonnement se renouvelle automatiquement jusqu'à ce que vous l'annuliez dans Google Play, et un seul abonnement couvre tout votre ménage. Pour les 18 ans et plus.</p><p><a class="btn" href="../demo.html">Essayer la démo dans votre navigateur</a> <span class="muted">Tous les écrans, avec les chiffres fictifs d'une personne type. Consultation seulement.</span></p></section>
+  <section id="delete-account"><h2>Supprimer votre compte</h2>
+    <p>Vous avez un compte MapleBook seulement si vous vous êtes connecté pour utiliser un ménage ou synchroniser vos appareils. Vous pouvez le supprimer en tout temps, avec toutes les données MapleBook qui y sont stockées :</p>
+    <ul class="plain"><li>Dans l'application : <b>Paramètres → Compte et synchronisation → Supprimer le compte</b>, puis tapez SUPPRIMER pour confirmer. Vous pouvez choisir de garder une copie sur votre téléphone.</li>
+      <li>Par courriel : écrivez à support@maplebooksoftware.com à partir de l'adresse associée au compte et demandez-nous de le supprimer. Nous confirmons par courriel une fois la suppression faite.</li></ul>
+    <p>La suppression du compte efface définitivement votre connexion et vos données personnelles synchronisées, et vous retire de votre ménage (ce que vous avez partagé reste avec le ménage). Elle n'annule pas un abonnement MapleBook Plus : annulez-le dans Google Play (Paiements et abonnements → Abonnements). Les données qui se trouvent seulement sur votre téléphone sont effacées quand vous choisissez « Tout supprimer » dans les Paramètres ou que vous désinstallez l'application. Voyez la <a href="privacy.html">politique de confidentialité</a> pour plus de détails.</p></section>
+  <section id="contact"><h2>Nous joindre</h2><p>Questions ou assistance : support@maplebooksoftware.com</p></section>
+</main><footer><div class="wrap"><span>© 2026 Maple Book Software. MapleBook fournit des estimations à des fins de budget seulement; il ne s'agit pas de conseils fiscaux, juridiques, comptables, financiers ou en placement.</span><span><a href="terms.html">Conditions d'utilisation</a> · <a href="privacy.html">Politique de confidentialité</a> · support@maplebooksoftware.com</span></div></footer></body></html>

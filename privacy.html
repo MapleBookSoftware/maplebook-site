@@ -1,58 +1,113 @@
 <!doctype html><html lang="en-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Privacy Policy – MapleBook</title><meta name="description" content="MapleBook – Privacy Policy"><link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="alternate" hreflang="en-CA" href="privacy.html"><link rel="alternate" hreflang="fr-CA" href="fr/privacy.html">
+<title>Privacy Policy – MapleBook</title><meta name="description" content="MapleBook – Privacy Policy"><link rel="canonical" href="https://maplebooksoftware.com/privacy.html">
+<link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="theme-color" content="#A62C2B">
+<link rel="alternate" hreflang="en-CA" href="https://maplebooksoftware.com/privacy.html"><link rel="alternate" hreflang="fr-CA" href="https://maplebooksoftware.com/fr/privacy.html"><link rel="alternate" hreflang="x-default" href="https://maplebooksoftware.com/privacy.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="MapleBook"><meta property="og:title" content="Privacy Policy – MapleBook"><meta property="og:description" content="MapleBook – Privacy Policy">
+<meta property="og:url" content="https://maplebooksoftware.com/privacy.html"><meta property="og:image" content="https://maplebooksoftware.com/assets/og.png"><meta property="og:locale" content="en_CA"><meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
-:root { --bg: #F3F2F1; --surface: #FFFFFF; --soft: #F8F7F6; --ink: #1F1B1A; --muted: #67605D; --line: #E0DBD8; --accent: #A62C2B; --accent-soft: #F6E1DF; --warn-soft: #F7EBD7;
-  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif; }
-@media (prefers-color-scheme: dark) { :root { --bg: #141211; --surface: #1C1918; --soft: #231F1E; --ink: #EFE9E7; --muted: #A69E9B; --line: #352F2D; --accent: #F0877D; --accent-soft: #3C2220; --warn-soft: #3A2D16; color-scheme: dark } }
+:root { --bg: #F6F4F2; --surface: #FFFFFF; --soft: #FAF8F6; --ink: #1F1B1A; --muted: #5F5855; --line: #E2DCD8; --accent: #A62C2B; --accent-ink: #FFFFFF; --accent-soft: #F6E1DF; --warn-soft: #F7EBD7; --good-soft: #E3F1E6;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif; --r: 14px; }
+@media (prefers-color-scheme: dark) { :root { --bg: #141211; --surface: #1C1918; --soft: #231F1E; --ink: #EFE9E7; --muted: #B3ABA7; --line: #3A3331; --accent: #F0877D; --accent-ink: #1F1B1A; --accent-soft: #3C2220; --warn-soft: #3A2D16; --good-soft: #1E3324; color-scheme: dark } }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; }
-.wrap { max-width: 960px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+img { max-width: 100%; height: auto; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a[href^="mailto:"] { overflow-wrap: anywhere; word-break: break-word; }
+main, footer, header { overflow-wrap: break-word; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; } .skip:focus { left: 12px; top: 12px; background: var(--surface); padding: 8px 12px; border-radius: 8px; z-index: 9; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 header.top { border-bottom: 1px solid var(--line); background: var(--surface); }
-header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; flex-wrap: wrap; }
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--display); font-weight: 800; font-size: 1.25rem; }
-.logo { width: 36px; height: 36px; }
-nav a { color: var(--muted); text-decoration: none; margin-left: 18px; font-weight: 600; font-size: .95rem; }
-nav a:hover { color: var(--accent); }
-h1, h2, h3 { font-family: var(--display); line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; }
-.hero { padding-block: 56px 36px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px; align-items: center; }
-.hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 0 0 14px; }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; padding-block: 10px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--display); font-weight: 800; font-size: 1.25rem; min-height: 48px; }
+.logo { width: 34px; height: 34px; }
+nav.main { display: flex; flex-wrap: wrap; gap: 2px 4px; }
+nav.main a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: .95rem; padding: 10px 10px; border-radius: 8px; min-height: 44px; display: inline-flex; align-items: center; }
+nav.main a:hover { background: var(--soft); color: var(--accent); }
+nav.main a[aria-current=page] { color: var(--accent); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; overflow-wrap: break-word; }
+h2 { font-size: clamp(1.45rem, 3.4vw, 2rem); margin: 0 0 12px; }
+section { padding-block: 34px; }
+.muted { color: var(--muted); } .small { font-size: .9rem; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 10px 20px; border-radius: 12px; font: inherit; font-weight: 700; text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--surface); cursor: pointer; text-align: center; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn:hover { filter: brightness(.97); }
+.cta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.hero { padding-block: 44px 24px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.hero h1 { font-size: clamp(2rem, 6vw, 3.3rem); margin: 0 0 14px; }
 .hero h1 span { color: var(--accent); }
-.hero p.lead { font-size: 1.12rem; color: var(--muted); margin: 0 0 22px; max-width: 46ch; }
-.cta { display: inline-flex; gap: 10px; flex-wrap: wrap; }
-.btn { display: inline-flex; align-items: center; padding: 11px 18px; border-radius: 10px; font-weight: 700; text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
-.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-.card-stack { display: flex; flex-direction: column; gap: 12px; }
-.mini { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: 0 10px 24px rgba(0,0,0,.06); }
-.mini small { display: block; text-transform: uppercase; letter-spacing: .08em; font-size: .72rem; color: var(--muted); font-weight: 700; }
-.mini b { font-family: var(--display); font-size: 1.7rem; }
-.mini em { font-style: normal; font-size: .75rem; background: var(--warn-soft); padding: 1px 8px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
-section { padding-block: 28px; }
-.features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
-.feature h3 { margin: 0 0 6px; font-size: 1.05rem; }
-.feature p { margin: 0; color: var(--muted); font-size: .95rem; }
-.notice { background: var(--warn-soft); border-radius: 12px; padding: 18px 20px; }
-.notice h2 { margin: 0 0 8px; font-size: 1.2rem; }
-.notice ul { margin: 0; padding-left: 20px; }
-ul.plain { padding-left: 20px; margin: 0 0 8px; }
-.doc { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 26px; max-width: 78ch; }
-.doc h1 { font-size: 1.8rem; margin: 0 0 4px; } .doc h2 { font-size: 1.1rem; margin: 22px 0 4px; }
+.lead { font-size: 1.15rem; color: var(--muted); margin: 0 0 22px; max-width: 46ch; }
+.phone { margin: 0 auto; width: min(290px, 78vw); border-radius: 36px; padding: 10px; background: #1F1B1A; box-shadow: 0 24px 50px rgba(0,0,0,.18); }
+.phone img { display: block; width: 100%; border-radius: 28px; aspect-ratio: 9 / 16; object-fit: cover; background: var(--soft); }
+figure { margin: 0; } figcaption { font-size: .8rem; color: var(--muted); text-align: center; margin-top: 10px; }
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card h3 { margin: 4px 0 0; font-size: 1.1rem; } .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+.card img { border-radius: 10px; border: 1px solid var(--line); aspect-ratio: 9 / 12; object-fit: cover; object-position: top; width: 100%; background: var(--soft); }
+.chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: 2px 10px; border-radius: 99px; background: var(--accent-soft); color: var(--ink); align-self: flex-start; }
+.also { columns: 2; column-gap: 32px; padding-left: 20px; } .also li { break-inside: avoid; margin-bottom: 6px; }
+.three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; min-width: 0; }
+.box h3 { margin: 0 0 6px; font-size: 1.1rem; } .box p { margin: 0; }
+.notice { background: var(--warn-soft); border-radius: var(--r); padding: 16px 20px; } .notice.good { background: var(--good-soft); } .notice.bad { background: var(--accent-soft); }
+.notice h2 { margin: 0 0 8px; font-size: 1.25rem; } .notice ul { margin: 0; padding-left: 20px; }
+ul.plain { padding-left: 20px; margin: 0 0 8px; } ul.plain li { margin-bottom: 4px; }
+.never li::marker { content: '✕  '; color: var(--accent); font-weight: 700; }
+.price { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; min-width: 0; }
+.plan.plus { border: 2px solid var(--accent); }
+.plan .amt { font-family: var(--display); font-size: 1.9rem; font-weight: 800; margin: 4px 0; }
+.plan ul { padding-left: 20px; margin: 8px 0 0; }
+details.faq { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0 16px; margin-bottom: 10px; }
+details.faq summary { cursor: pointer; font-weight: 700; padding: 14px 0; min-height: 48px; list-style-position: outside; }
+details.faq p { margin: 0 0 14px; }
+.form { display: grid; gap: 14px; max-width: 34rem; grid-template-columns: minmax(0, 1fr); }
+.form input, .form select { min-width: 0; max-width: 100%; }
+.form label, .form legend { display: grid; gap: 4px; font-weight: 600; }
+.form input[type=text], .form input[type=email], .form input[type=date], .form select { font: inherit; padding: 10px 12px; min-height: 48px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); width: 100%; }
+.form fieldset { border: 0; padding: 0; margin: 0; } .form .radios { display: flex; flex-wrap: wrap; gap: 8px; }
+.form .radios label { display: flex; align-items: center; gap: 8px; font-weight: 500; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; min-height: 48px; background: var(--surface); cursor: pointer; }
+.form .radios input, .form .tick input { width: 22px; height: 22px; accent-color: var(--accent); flex: none; }
+.form .tick { display: flex !important; align-items: flex-start; gap: 10px; font-weight: 500 !important; }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.doc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(18px, 4vw, 30px); max-width: 78ch; overflow-wrap: break-word; }
+.doc h1 { font-size: clamp(1.6rem, 5vw, 2.1rem); margin: 0 0 6px; } .doc h2 { font-size: 1.2rem; margin: 22px 0 6px; }
 .legal-meta { color: var(--muted); font-size: .9rem; margin-top: 0; }
-footer { border-top: 1px solid var(--line); margin-top: 32px; padding-block: 22px 40px; color: var(--muted); font-size: .9rem; }
-footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-footer a { color: var(--muted); }
-a { color: var(--accent); }
-@media (max-width: 760px) { .hero { grid-template-columns: 1fr; padding-block: 36px 20px; } .features { grid-template-columns: 1fr; } nav a { margin-left: 12px; } }
-</style></head><body><header class="top"><div class="wrap"><a class="brand" href="index.html"><svg class="logo" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#A62C2B"/><path d="M32 21 C27 17.5 19.5 17 12.5 18.5 V47 C19.5 45.5 27 46 32 49.5 C37 46 44.5 45.5 51.5 47 V18.5 C44.5 17 37 17.5 32 21 Z" fill="#fff"/><path d="M32 21 V49.5" stroke="#E7C9C6" stroke-width="1.2"/><path d="M15.5 25.5 H22 M42 25.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 29.5 H22 M42 29.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 33.5 H22 M42 33.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 37.5 H22 M42 37.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 41.5 H22 M42 41.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M32 22.5 L34.2 27.9 L38.2 26.4 L37.1 31.4 L41.3 32.2 L36.9 35.8 L37.8 37.8 L33.1 37 L33.1 42.5 L30.9 42.5 L30.9 37 L26.2 37.8 L27.1 35.8 L22.7 32.2 L26.9 31.4 L25.8 26.4 L29.8 27.9 Z" fill="#A62C2B"/></svg>
-MapleBook</a><nav><a href="index.html#features">Features</a><a href="index.html#delete-account">Delete account</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="fr/privacy.html" hreflang="fr" lang="fr">Français</a></nav></div></header><main class="wrap" style="padding-block:28px"><article class="doc"><h1>Privacy Policy</h1>
-<p class="legal-meta">Last updated: October 18, 2026 · Version 2026-10-18</p>
+.tool { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.tool .out { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; min-width: 0; }
+.tool .out h2 { font-size: 1.25rem; }
+.row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.row.strong { font-size: 1.1rem; border-bottom: 0; } .row > span { flex: 1 1 8rem; min-width: 0; } .row b { margin-left: auto; text-align: right; overflow-wrap: break-word; min-width: 0; }
+.bars { display: grid; gap: 10px; margin: 6px 0 12px; } .bar-row { display: grid; grid-template-columns: minmax(0, 8rem) minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.bar-t { height: 14px; background: var(--soft); border-radius: 99px; overflow: hidden; border: 1px solid var(--line); } .bar-f { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
+.bar-f.w { opacity: .65; } .bar-f.s { opacity: .4; } .bar-v { font-weight: 700; white-space: nowrap; }
+.cmp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } .cmp-col { border: 1px solid var(--line); border-radius: 12px; padding: 12px; min-width: 0; } .cmp-col h3 { font-size: 1rem; margin: 0 0 6px; }
+.debt-row { border: 1px solid var(--line) !important; border-radius: 12px; padding: 12px !important; display: grid; gap: 10px; } .debt-row legend { padding: 0 6px; }
+.points li { margin-bottom: 8px; }
+.toollist { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.toollist a { display: block; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; min-height: 48px; }
+.toollist a:hover { border-color: var(--accent); } .toollist b { display: block; font-family: var(--display); font-size: 1.1rem; margin-bottom: 4px; } .toollist span { color: var(--muted); font-size: .95rem; }
+.soft-cta { margin-top: 24px; padding: 16px 18px; border-radius: var(--r); background: var(--accent-soft); display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.soft-cta > span { flex: 1 1 14rem; min-width: 0; }
+.cta > *, .soft-cta > * { max-width: 100%; }
+.play-badge img { height: 64px; width: auto; display: block; }
+footer { border-top: 1px solid var(--line); margin-top: 32px; padding-block: 24px 40px; color: var(--muted); font-size: .92rem; background: var(--surface); }
+footer .cols { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+footer nav { display: flex; flex-wrap: wrap; gap: 4px 16px; } footer nav a { color: var(--ink); min-height: 44px; display: inline-flex; align-items: center; }
+@media (max-width: 860px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .toollist { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .hero, .tool { grid-template-columns: minmax(0, 1fr); padding-block: 28px 12px; } .three, .price, .cmp { grid-template-columns: minmax(0, 1fr); } .also { columns: 1; } }
+@media (max-width: 520px) { .cards, .toollist { grid-template-columns: minmax(0, 1fr); } .bar-row { grid-template-columns: minmax(0, 1fr) auto; } .bar-t { grid-column: 1 / -1; grid-row: 2; } }
+</style></head><body><a class="skip" href="#main">Skip to content</a><header class="top"><div class="wrap"><a class="brand" href="index.html"><svg class="logo" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#A62C2B"/><path d="M32 21 C27 17.5 19.5 17 12.5 18.5 V47 C19.5 45.5 27 46 32 49.5 C37 46 44.5 45.5 51.5 47 V18.5 C44.5 17 37 17.5 32 21 Z" fill="#fff"/><path d="M32 21 V49.5" stroke="#E7C9C6" stroke-width="1.2"/><path d="M15.5 25.5 H22 M42 25.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 29.5 H22 M42 29.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 33.5 H22 M42 33.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 37.5 H22 M42 37.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 41.5 H22 M42 41.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M32 22.5 L34.2 27.9 L38.2 26.4 L37.1 31.4 L41.3 32.2 L36.9 35.8 L37.8 37.8 L33.1 37 L33.1 42.5 L30.9 42.5 L30.9 37 L26.2 37.8 L27.1 35.8 L22.7 32.2 L26.9 31.4 L25.8 26.4 L29.8 27.9 Z" fill="#A62C2B"/></svg>
+MapleBook</a>
+<nav class="main" aria-label="Main"><a href="index.html#features">Features</a><a href="tools/index.html">Free tools</a><a href="index.html#pricing">Pricing</a><a href="index.html#faq">FAQ</a><a href="feedback.html">Feedback</a><a href="fr/privacy.html" hreflang="fr" lang="fr">Français</a></nav></div></header><main id="main" class="wrap" style="padding-block:28px"><article class="doc"><h1>Privacy Policy</h1>
+<p class="legal-meta">Last updated: October 21, 2026 · Version 2026-10-21</p>
 <p>This policy explains what information MapleBook handles, where it is stored, and the choices you have. Maple Book Software, a sole proprietorship registered in Ontario ("we") is responsible for personal information under our control. Our privacy officer is the owner of Maple Book Software, reachable at support@maplebooksoftware.com.</p>
 
 <h2>1. The short version</h2>
 <ul>
-  <li>Using MapleBook for your own budget needs no account: everything you enter stays on your device.</li>
+  <li>Using MapleBook for your own budget needs no account: your budget stays on your device. Only feedback you choose to send reaches us.</li>
   <li>If you sign in (needed for households and to sync between your devices), your personal data is stored privately with our hosting provider in Canada. Nobody else can see it, including other members of your household.</li>
   <li>Only what you put in a household is shared, and only with its members. You choose what they see about your income.</li>
   <li>Bank statements you import are read on your device. The files are not uploaded to us.</li>
@@ -81,40 +136,47 @@ MapleBook</a><nav><a href="index.html#features">Features</a><a href="index.html#
 <p>Google Play gives us order and sales reports so we can handle refunds, sales taxes and support requests. These include the order number, the product, the price and, for tax purposes, the buyer's province or state, country and postal code; where Google is the merchant of record for a sale, they include only the country. They do not include your payment card details or your MapleBook data.</p>
 <p>If we give you free MapleBook Plus access (for example as a tester), we keep your email address and the end date of that access.</p>
 
-<h2>7. Information collected automatically</h2>
+<h2>7. Feedback and beta test sign-ups (optional)</h2>
+<p><b>Feedback.</b> If you choose to send feedback from the app or our website, we collect: the kind of feedback (problem, idea, question or something confusing), your message, the screen it is about, a screenshot if you add one, the app version, the Android version (or "Web"), the language, and whether you want to see updates about it. If you are signed in, it is linked to your account. A random code is kept on your device (or in your browser) so you can see the status of your feedback and our reply without an account. To limit spam, we also keep a one-way scrambled (hashed) form of your internet (IP) address, which can't be turned back into the address. Feedback never includes your budget, transactions, amounts or account details, unless you type them into the message or show them in a screenshot, so please don't.</p>
+<p><b>Beta test sign-ups.</b> If you sign up for the test on our website, we collect your email address (the Google account you use on Google Play), your first name and province if you give them, whether you have an Android phone, the language, your consent, and a scrambled form of your IP address to limit spam. We use them only to invite you to the test.</p>
+<p>Both are stored with Supabase in Canada and used only to improve MapleBook, answer you, and run the test. Only Maple Book Software can read them.</p>
+
+<h2>8. Information collected automatically</h2>
 <p>MapleBook does not use advertising or analytics trackers. The services the app and our website connect to, and when:</p>
 <ul>
-  <li><b>Android app:</b> our hosting provider (Supabase, in Canada), only if you sign in; Google Play, for subscriptions. Fonts and the PDF reader are built into the app, and the app blocks connections to anything else.</li>
+  <li><b>Android app:</b> our hosting provider (Supabase, in Canada), only if you sign in or send feedback; Google Play, for subscriptions. Fonts and the PDF reader are built into the app, and the app blocks connections to anything else.</li>
   <li><b>Our website and web demo:</b> hosted by GitHub Pages (GitHub, Inc., United States), which receives standard web server information such as your IP address. The web demo also loads typefaces from Google Fonts and the PDF reader from cdnjs (Cloudflare), which receive technical information such as your IP address. The website and demo do not use trackers, and nothing you type in the demo is saved.</li>
   <li><b>Email:</b> messages to support@maplebooksoftware.com are forwarded to and stored in our Google (Gmail) mailbox.</li>
 </ul>
 
-<h2>8. How we use information</h2>
-<p>We use information only to provide the Service: storing and syncing your data if you sign in, running households you join, checking and restoring subscriptions, responding to support requests, and keeping the Service secure. We do not use your financial information for marketing, and we do not sell, rent or trade personal information.</p>
+<h2>9. How we use information</h2>
+<p>We use information only to provide the Service: storing and syncing your data if you sign in, running households you join, checking and restoring subscriptions, responding to support requests and feedback, running the beta test, and keeping the Service secure. We do not use your financial information for marketing, and we do not sell, rent or trade personal information.</p>
 
-<h2>9. Sharing</h2>
+<h2>10. Sharing</h2>
 <p>We share information only with the members of a household you join (as described above) and with service providers that help us run the Service (Supabase for accounts, sync and households; Google Play for subscriptions; GitHub for our website; Google for email), under agreements that require them to protect it, or where required by law. Google and GitHub may process information outside Canada (for example in the United States), where it may be subject to the laws of that jurisdiction. Supabase stores your account data in Canada.</p>
 
-<h2>10. Retention and deletion</h2>
-<p>Data on your device stays until you delete it in the app (Settings → Your data → Delete everything) or uninstall the app. Account data is kept while your account exists. When you delete your account, it is deleted right away from the live database and from our provider's backups within 30 days. Subscription records are deleted with your account. Support emails are kept as long as needed to respond and for our records. Free-access entries are kept until we remove them from the list.</p>
+<h2>11. Retention and deletion</h2>
+<p>Data on your device stays until you delete it in the app (Settings → Your data → Delete everything) or uninstall the app. Account data is kept while your account exists. When you delete your account, it is deleted right away from the live database and from our provider's backups within 30 days. Subscription records are deleted with your account. Support emails are kept as long as needed to respond and for our records. Feedback (with any screenshot) is kept while it helps us improve the app; it is deleted when you ask us (email us with roughly when you sent it) and when you delete your account. Beta sign-ups are deleted when the test ends or when you ask. Free-access entries are kept until we remove them from the list.</p>
 
-<h2>11. Security</h2>
+<h2>12. Security</h2>
 <p>We use reasonable safeguards appropriate to the sensitivity of financial information, including encryption in transit, per-account and per-household access rules on the server, and not storing secret keys in the app. On Android you can turn on an app lock that asks for your fingerprint, face or phone PIN; while it is on, the app's screen is hidden in the recent-apps view. Backup files you export contain your financial data; you can protect them with a password (they are then encrypted with AES-256), and if you lose that password we cannot recover the backup. No method of storage or transmission is completely secure. Protect your device with a screen lock and keep backups private.</p>
 
-<h2>12. Age</h2>
+<h2>13. Age</h2>
 <p>MapleBook is intended for people 18 and older. We do not knowingly collect information from anyone under 18.</p>
 
-<h2>13. Your rights</h2>
+<h2>14. Your rights</h2>
 <p>You can access, correct and delete your information in the app at any time, export a backup, change what you share with a household, leave a household, sign out, and delete your account. You can also contact us to request access to or correction of personal information we hold, or to make a privacy complaint. If you are not satisfied with our response, you may contact the Office of the Privacy Commissioner of Canada, or, in Quebec, the Commission d'accès à l'information.</p>
 
-<h2>14. Privacy incidents</h2>
+<h2>15. Privacy incidents</h2>
 <p>If a privacy breach involving your information creates a real risk of significant harm, we will notify you and the appropriate regulators as required by law.</p>
 
-<h2>15. Changes</h2>
+<h2>16. Changes</h2>
 <p>We will update this policy when our practices change, update the "Last updated" date, and ask you to review material changes in the app.</p>
 
-<h2>16. Language</h2>
+<h2>17. Language</h2>
 <p>This policy is available in English and French. Both versions are equally authoritative.</p>
 
-<h2>17. Contact</h2>
-<p>Maple Book Software · <a href="mailto:support@maplebooksoftware.com">support@maplebooksoftware.com</a> · <a href="https://maplebooksoftware.com">maplebooksoftware.com</a></p></article></main><footer><div class="wrap"><span>© 2026 Maple Book Software. MapleBook provides estimates for budgeting only; it is not tax, legal, accounting, financial or investment advice.</span><span><a href="terms.html">Terms of Use</a> · <a href="privacy.html">Privacy Policy</a> · support@maplebooksoftware.com</span></div></footer></body></html>
+<h2>18. Contact</h2>
+<p>Maple Book Software · <a href="mailto:support@maplebooksoftware.com">support@maplebooksoftware.com</a> · <a href="https://maplebooksoftware.com">maplebooksoftware.com</a></p></article></main><footer><div class="wrap"><div class="cols"><div><b>Maple Book Software</b> · Ontario, Canada<br><a href="mailto:support@maplebooksoftware.com">support@maplebooksoftware.com</a></div>
+<nav aria-label="Site"><a href="about.html">About</a><a href="data.html">How we handle your data</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a><a href="index.html#delete-account">Delete your account</a><a href="feedback.html">Feedback</a></nav></div>
+<p class="small">© 2026 Maple Book Software. MapleBook provides estimates for budgeting only; it is not tax, legal, accounting, financial or investment advice.</p></div></footer></body></html>

@@ -1,0 +1,1 @@
+window.MB_SITE = {"supabaseUrl":"https://tbjeadkseujxlugijzbt.supabase.co","supabaseKey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRiamVhZGtzZXVqeGx1Z2lqemJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIyNjg2NDMsImV4cCI6MjEwNzg0NDY0M30.z-9yhxPCCcRzZ4AFlK-EDmihygAGP5dc0qKMrnygRbM","email":"support@maplebooksoftware.com","appVersion":"1.0.1"};

@@ -1,0 +1,131 @@
+<!doctype html><html lang="en-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Feedback – MapleBook</title><meta name="description" content="MapleBook – Feedback"><link rel="canonical" href="https://maplebooksoftware.com/feedback.html">
+<link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="theme-color" content="#A62C2B">
+<link rel="alternate" hreflang="en-CA" href="https://maplebooksoftware.com/feedback.html"><link rel="alternate" hreflang="fr-CA" href="https://maplebooksoftware.com/fr/feedback.html"><link rel="alternate" hreflang="x-default" href="https://maplebooksoftware.com/feedback.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="MapleBook"><meta property="og:title" content="Feedback – MapleBook"><meta property="og:description" content="MapleBook – Feedback">
+<meta property="og:url" content="https://maplebooksoftware.com/feedback.html"><meta property="og:image" content="https://maplebooksoftware.com/assets/og.png"><meta property="og:locale" content="en_CA"><meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root { --bg: #F6F4F2; --surface: #FFFFFF; --soft: #FAF8F6; --ink: #1F1B1A; --muted: #5F5855; --line: #E2DCD8; --accent: #A62C2B; --accent-ink: #FFFFFF; --accent-soft: #F6E1DF; --warn-soft: #F7EBD7; --good-soft: #E3F1E6;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif; --r: 14px; }
+@media (prefers-color-scheme: dark) { :root { --bg: #141211; --surface: #1C1918; --soft: #231F1E; --ink: #EFE9E7; --muted: #B3ABA7; --line: #3A3331; --accent: #F0877D; --accent-ink: #1F1B1A; --accent-soft: #3C2220; --warn-soft: #3A2D16; --good-soft: #1E3324; color-scheme: dark } }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+img { max-width: 100%; height: auto; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a[href^="mailto:"] { overflow-wrap: anywhere; word-break: break-word; }
+main, footer, header { overflow-wrap: break-word; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; } .skip:focus { left: 12px; top: 12px; background: var(--surface); padding: 8px 12px; border-radius: 8px; z-index: 9; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { border-bottom: 1px solid var(--line); background: var(--surface); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; padding-block: 10px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--display); font-weight: 800; font-size: 1.25rem; min-height: 48px; }
+.logo { width: 34px; height: 34px; }
+nav.main { display: flex; flex-wrap: wrap; gap: 2px 4px; }
+nav.main a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: .95rem; padding: 10px 10px; border-radius: 8px; min-height: 44px; display: inline-flex; align-items: center; }
+nav.main a:hover { background: var(--soft); color: var(--accent); }
+nav.main a[aria-current=page] { color: var(--accent); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; overflow-wrap: break-word; }
+h2 { font-size: clamp(1.45rem, 3.4vw, 2rem); margin: 0 0 12px; }
+section { padding-block: 34px; }
+.muted { color: var(--muted); } .small { font-size: .9rem; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 10px 20px; border-radius: 12px; font: inherit; font-weight: 700; text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--surface); cursor: pointer; text-align: center; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn:hover { filter: brightness(.97); }
+.cta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.hero { padding-block: 44px 24px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.hero h1 { font-size: clamp(2rem, 6vw, 3.3rem); margin: 0 0 14px; }
+.hero h1 span { color: var(--accent); }
+.lead { font-size: 1.15rem; color: var(--muted); margin: 0 0 22px; max-width: 46ch; }
+.phone { margin: 0 auto; width: min(290px, 78vw); border-radius: 36px; padding: 10px; background: #1F1B1A; box-shadow: 0 24px 50px rgba(0,0,0,.18); }
+.phone img { display: block; width: 100%; border-radius: 28px; aspect-ratio: 9 / 16; object-fit: cover; background: var(--soft); }
+figure { margin: 0; } figcaption { font-size: .8rem; color: var(--muted); text-align: center; margin-top: 10px; }
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card h3 { margin: 4px 0 0; font-size: 1.1rem; } .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+.card img { border-radius: 10px; border: 1px solid var(--line); aspect-ratio: 9 / 12; object-fit: cover; object-position: top; width: 100%; background: var(--soft); }
+.chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: 2px 10px; border-radius: 99px; background: var(--accent-soft); color: var(--ink); align-self: flex-start; }
+.also { columns: 2; column-gap: 32px; padding-left: 20px; } .also li { break-inside: avoid; margin-bottom: 6px; }
+.three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; min-width: 0; }
+.box h3 { margin: 0 0 6px; font-size: 1.1rem; } .box p { margin: 0; }
+.notice { background: var(--warn-soft); border-radius: var(--r); padding: 16px 20px; } .notice.good { background: var(--good-soft); } .notice.bad { background: var(--accent-soft); }
+.notice h2 { margin: 0 0 8px; font-size: 1.25rem; } .notice ul { margin: 0; padding-left: 20px; }
+ul.plain { padding-left: 20px; margin: 0 0 8px; } ul.plain li { margin-bottom: 4px; }
+.never li::marker { content: '✕  '; color: var(--accent); font-weight: 700; }
+.price { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; min-width: 0; }
+.plan.plus { border: 2px solid var(--accent); }
+.plan .amt { font-family: var(--display); font-size: 1.9rem; font-weight: 800; margin: 4px 0; }
+.plan ul { padding-left: 20px; margin: 8px 0 0; }
+details.faq { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0 16px; margin-bottom: 10px; }
+details.faq summary { cursor: pointer; font-weight: 700; padding: 14px 0; min-height: 48px; list-style-position: outside; }
+details.faq p { margin: 0 0 14px; }
+.form { display: grid; gap: 14px; max-width: 34rem; grid-template-columns: minmax(0, 1fr); }
+.form input, .form select { min-width: 0; max-width: 100%; }
+.form label, .form legend { display: grid; gap: 4px; font-weight: 600; }
+.form input[type=text], .form input[type=email], .form input[type=date], .form select { font: inherit; padding: 10px 12px; min-height: 48px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); width: 100%; }
+.form fieldset { border: 0; padding: 0; margin: 0; } .form .radios { display: flex; flex-wrap: wrap; gap: 8px; }
+.form .radios label { display: flex; align-items: center; gap: 8px; font-weight: 500; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; min-height: 48px; background: var(--surface); cursor: pointer; }
+.form .radios input, .form .tick input { width: 22px; height: 22px; accent-color: var(--accent); flex: none; }
+.form .tick { display: flex !important; align-items: flex-start; gap: 10px; font-weight: 500 !important; }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.doc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(18px, 4vw, 30px); max-width: 78ch; overflow-wrap: break-word; }
+.doc h1 { font-size: clamp(1.6rem, 5vw, 2.1rem); margin: 0 0 6px; } .doc h2 { font-size: 1.2rem; margin: 22px 0 6px; }
+.legal-meta { color: var(--muted); font-size: .9rem; margin-top: 0; }
+.tool { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.tool .out { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; min-width: 0; }
+.tool .out h2 { font-size: 1.25rem; }
+.row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.row.strong { font-size: 1.1rem; border-bottom: 0; } .row > span { flex: 1 1 8rem; min-width: 0; } .row b { margin-left: auto; text-align: right; overflow-wrap: break-word; min-width: 0; }
+.bars { display: grid; gap: 10px; margin: 6px 0 12px; } .bar-row { display: grid; grid-template-columns: minmax(0, 8rem) minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.bar-t { height: 14px; background: var(--soft); border-radius: 99px; overflow: hidden; border: 1px solid var(--line); } .bar-f { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
+.bar-f.w { opacity: .65; } .bar-f.s { opacity: .4; } .bar-v { font-weight: 700; white-space: nowrap; }
+.cmp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } .cmp-col { border: 1px solid var(--line); border-radius: 12px; padding: 12px; min-width: 0; } .cmp-col h3 { font-size: 1rem; margin: 0 0 6px; }
+.debt-row { border: 1px solid var(--line) !important; border-radius: 12px; padding: 12px !important; display: grid; gap: 10px; } .debt-row legend { padding: 0 6px; }
+.points li { margin-bottom: 8px; }
+.toollist { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.toollist a { display: block; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; min-height: 48px; }
+.toollist a:hover { border-color: var(--accent); } .toollist b { display: block; font-family: var(--display); font-size: 1.1rem; margin-bottom: 4px; } .toollist span { color: var(--muted); font-size: .95rem; }
+.soft-cta { margin-top: 24px; padding: 16px 18px; border-radius: var(--r); background: var(--accent-soft); display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.soft-cta > span { flex: 1 1 14rem; min-width: 0; }
+.cta > *, .soft-cta > * { max-width: 100%; }
+.play-badge img { height: 64px; width: auto; display: block; }
+footer { border-top: 1px solid var(--line); margin-top: 32px; padding-block: 24px 40px; color: var(--muted); font-size: .92rem; background: var(--surface); }
+footer .cols { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+footer nav { display: flex; flex-wrap: wrap; gap: 4px 16px; } footer nav a { color: var(--ink); min-height: 44px; display: inline-flex; align-items: center; }
+@media (max-width: 860px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .toollist { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .hero, .tool { grid-template-columns: minmax(0, 1fr); padding-block: 28px 12px; } .three, .price, .cmp { grid-template-columns: minmax(0, 1fr); } .also { columns: 1; } }
+@media (max-width: 520px) { .cards, .toollist { grid-template-columns: minmax(0, 1fr); } .bar-row { grid-template-columns: minmax(0, 1fr) auto; } .bar-t { grid-column: 1 / -1; grid-row: 2; } }
+</style></head><body><a class="skip" href="#main">Skip to content</a><header class="top"><div class="wrap"><a class="brand" href="index.html"><svg class="logo" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#A62C2B"/><path d="M32 21 C27 17.5 19.5 17 12.5 18.5 V47 C19.5 45.5 27 46 32 49.5 C37 46 44.5 45.5 51.5 47 V18.5 C44.5 17 37 17.5 32 21 Z" fill="#fff"/><path d="M32 21 V49.5" stroke="#E7C9C6" stroke-width="1.2"/><path d="M15.5 25.5 H22 M42 25.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 29.5 H22 M42 29.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 33.5 H22 M42 33.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 37.5 H22 M42 37.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M15.5 41.5 H22 M42 41.5 H48.5" stroke="#EBD3D0" stroke-width="1.3" stroke-linecap="round"/><path d="M32 22.5 L34.2 27.9 L38.2 26.4 L37.1 31.4 L41.3 32.2 L36.9 35.8 L37.8 37.8 L33.1 37 L33.1 42.5 L30.9 42.5 L30.9 37 L26.2 37.8 L27.1 35.8 L22.7 32.2 L26.9 31.4 L25.8 26.4 L29.8 27.9 Z" fill="#A62C2B"/></svg>
+MapleBook</a>
+<nav class="main" aria-label="Main"><a href="index.html#features">Features</a><a href="tools/index.html">Free tools</a><a href="index.html#pricing">Pricing</a><a href="index.html#faq">FAQ</a><a href="feedback.html" aria-current="page">Feedback</a><a href="fr/feedback.html" hreflang="fr" lang="fr">Français</a></nav></div></header><main id="main" class="wrap" style="padding-block:28px"><article class="doc"><style>.fb-form{display:grid;gap:14px;max-width:60ch}.fb-form label{display:grid;gap:4px;font-weight:600}.fb-form textarea,.fb-form select,.fb-form input[type=text]{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);width:100%}
+.fb-types{display:flex;flex-wrap:wrap;gap:8px;border:0;padding:0;margin:0}.fb-types legend{font-weight:600;margin-bottom:6px}.fb-types label{display:flex;align-items:center;gap:8px;font-weight:500;border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-height:44px;cursor:pointer;background:var(--surface)}
+.fb-types input{width:20px;height:20px;accent-color:var(--accent)}.fb-types label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}.fb-row{display:flex!important;grid-template-columns:none!important;align-items:center;gap:10px!important;font-weight:500!important}.fb-row input{width:22px;height:22px;accent-color:var(--accent)}
+.hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}#fb-preview img{max-width:100%;max-height:240px;border:1px solid var(--line);border-radius:8px;display:block;margin-bottom:8px}
+.notice.good{background:#E3F1E6}.notice.bad{background:#F6E1DF}@media (prefers-color-scheme: dark){.notice.good{background:#1E3324}.notice.bad{background:#3C2220}}
+.fb-link{word-break:break-all;font-size:.85rem}.fb-item{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;background:var(--surface)}.fb-text{white-space:pre-wrap;overflow-wrap:anywhere}.fb-reply{background:var(--accent-soft);border-radius:8px;padding:8px 12px}.fb-reply p{margin:4px 0 0;white-space:pre-wrap}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.8rem;font-weight:700;background:var(--soft);border:1px solid var(--line)}.tag.st-planned,.tag.st-in_progress{background:var(--accent-soft)}.tag.st-done{background:#E3F1E6}.muted{color:var(--muted)}</style><h1>Feedback</h1>
+<p>Tell us about a problem, an idea, a question or anything confusing in MapleBook or on this website. No account needed. We read every message.</p>
+<form id="fb-form" class="fb-form" novalidate>
+  <fieldset class="fb-types"><legend>What is it?</legend>
+    <label><input type="radio" name="fb-type" value="problem" checked> Problem</label><label><input type="radio" name="fb-type" value="idea"> Idea</label><label><input type="radio" name="fb-type" value="question"> Question</label><label><input type="radio" name="fb-type" value="confusing"> Something confusing</label></fieldset>
+  <label for="fb-msg">Your message<textarea id="fb-msg" rows="6" maxlength="4000" required></textarea></label>
+  <p class="muted" style="margin:-8px 0 0">Please don't include passwords, account numbers or other private details.</p>
+  <label for="fb-about">It's about<select id="fb-about"><option value="The app">The app</option><option value="Website">The website</option><option value="Something else">Something else</option></select></label>
+  <label for="fb-file">Screenshot (optional)<input id="fb-file" type="file" accept="image/*"></label>
+  <div id="fb-preview"></div>
+  <label class="fb-row"><input type="checkbox" id="fb-notify" checked> Show me updates on this page</label>
+  <div class="hp" aria-hidden="true"><label>Website<input type="text" id="fb-website" tabindex="-1" autocomplete="off"></label></div>
+  <p class="muted">Sent with your message: the page language and that it came from the website. To limit spam we keep a scrambled form of your IP address. Nothing else. <a href="privacy.html">Privacy Policy</a></p>
+  <p><button class="btn primary" type="submit">Send</button></p>
+</form>
+<div id="fb-result" role="status" tabindex="-1" hidden></div>
+<div id="fb-mine" hidden></div>
+<h2 id="contact">Contact</h2>
+<p>Email: <a href="mailto:support@maplebooksoftware.com">support@maplebooksoftware.com</a></p>
+<script src="site-config.js"></script><script src="assets/feedback-page.js"></script></article></main><footer><div class="wrap"><div class="cols"><div><b>Maple Book Software</b> · Ontario, Canada<br><a href="mailto:support@maplebooksoftware.com">support@maplebooksoftware.com</a></div>
+<nav aria-label="Site"><a href="about.html">About</a><a href="data.html">How we handle your data</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a><a href="index.html#delete-account">Delete your account</a><a href="feedback.html">Feedback</a></nav></div>
+<p class="small">© 2026 Maple Book Software. MapleBook provides estimates for budgeting only; it is not tax, legal, accounting, financial or investment advice.</p></div></footer></body></html>

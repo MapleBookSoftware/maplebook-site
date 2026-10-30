@@ -1,4 +1,4 @@
-/* MapleBook owner page (maplebooksoftware.com/admin/): feedback inbox and beta sign-ups.
+/* MapleBook owner page (maplebooksoftware.com/admin/): feedback inbox and beta sign-ups (with invite emails, item 26).
    Opens only for accounts listed in public.admins. Every read and change is checked again on the server
    (row-level security and the admin_* functions), so hiding things here is not what protects them.
    Exports never include account ids, emails (except the beta "Copy all emails" button) or IP data. */
@@ -12,7 +12,7 @@
   var TYPES = [['problem', 'Problem'], ['idea', 'Idea'], ['question', 'Question'], ['confusing', 'Something confusing']];
   var label = function (list, k) { var f = list.filter(function (x) { return x[0] === k; })[0]; return f ? f[1] : k; };
   var COLS = 'id,created_at,updated_at,status_changed_at,source,type,message,screen,app_version,os_version,lang,screenshot_path,notify,status,reply';
-  var st = { tab: 'feedback', items: [], beta: [], sel: {}, betaSel: {}, f: { status: '', type: '', screen: '', lang: '', q: '', open: false }, bf: { notInvited: true }, version: C.appVersion || '' };
+  var st = { tab: 'feedback', items: [], beta: [], sel: {}, betaSel: {}, f: { status: '', type: '', screen: '', lang: '', q: '', open: false }, bf: { notInvited: true }, version: C.appVersion || '', optin: '', plus: true, sending: false };
   var sb = null;
   var app = $('#admin');
   var toast = function (t) { var el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { el.hidden = true; }, 3500); };
@@ -50,10 +50,14 @@
     app.innerHTML = '<p class="muted">Loading…</p>';
     Promise.all([
       sb.from('feedback').select(COLS).order('created_at', { ascending: false }).limit(2000),
-      sb.from('beta_signups').select('id,created_at,email,first_name,province,android,lang,invited_at').order('created_at', { ascending: false }).limit(5000)
+      sb.from('beta_signups').select('id,created_at,email,first_name,province,android,lang,invited_at,confirm_status,invite_sent_at,invite_status,invite_count,unsubscribed_at').order('created_at', { ascending: false }).limit(5000),
+      sb.rpc('admin_beta_settings'),
+      sb.functions.invoke('beta-email', { body: { action: 'status' } }).then(function (x) { return x; }, function () { return { error: true }; })
     ]).then(function (r) {
       if (r[0].error) { app.innerHTML = '<p class="notice bad">Couldn\'t load feedback: ' + esc(r[0].error.message) + '</p>'; return; }
-      st.items = r[0].data || []; st.beta = (r[1] && r[1].data) || []; draw();
+      st.items = r[0].data || []; st.beta = (r[1] && r[1].data) || []; st.optin = (r[2] && r[2].data && r[2].data.optin_link) || '';
+      // is email set up? (RESEND_API_KEY and BETA_MAILING_ADDRESS secrets; the page never sees their values)
+      st.mail = r[3] && !r[3].error && r[3].data ? r[3].data : null; draw();
     });
   }
   function filtered() {
@@ -113,14 +117,49 @@
       '<label class="reply">Reply (the sender sees this in the app or on the website)<textarea data-reply="' + esc(x.id) + '" rows="2" maxlength="1000">' + esc(x.reply || '') + '</textarea></label>' +
       '<div class="btns"><button class="btn primary" data-save="' + esc(x.id) + '">Save</button><button class="btn danger" data-del="' + esc(x.id) + '">Delete</button></div></div></article>';
   }
+  /* item 26: invite emails. "Invited Oct 27 · email sent" / "email failed: <reason>" */
+  var mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var shortDate = function (iso) { var d = new Date(iso); return mon[d.getMonth()] + ' ' + d.getDate(); };
+  function inviteState(b) {
+    if (b.unsubscribed_at) return 'Stopped emails ' + shortDate(b.unsubscribed_at);
+    if (!b.invited_at) return '';
+    var s = 'Invited ' + shortDate(b.invited_at);
+    if (b.invite_status === 'sent') s += ' · email sent' + (b.invite_count > 1 ? ' (' + b.invite_count + '×)' : '');
+    else if (b.invite_status && b.invite_status.indexOf('failed') === 0) s += ' · email ' + b.invite_status;
+    else if (b.invite_status === 'sending') s += ' · sending';
+    else s += ' · no email';
+    return s;
+  }
+  function sendInvites(ids, again) {
+    if (!ids.length || st.sending) return;
+    st.sending = true; draw();
+    sb.functions.invoke('beta-email', { body: { action: 'invite', ids: ids, plus: st.plus, again: !!again } }).then(function (r) {
+      st.sending = false;
+      if (r.error) { var c = r.error.context; return (c && c.json ? c.json() : Promise.resolve({})).then(function (j) { toast('Not sent: ' + ((j && j.error) || r.error.message)); draw(); }); }
+      var res = (r.data && r.data.results) || []; var n = function (k) { return res.filter(function (x) { return x.status === k; }).length; };
+      var failed = res.filter(function (x) { return /^failed/.test(x.status); }).length;
+      toast('Sent ' + n('sent') + (n('already-sent') ? ' · already invited ' + n('already-sent') + ' (use Send again)' : '') + (n('unsubscribed') ? ' · stopped emails ' + n('unsubscribed') : '') + (n('rate-limited') ? ' · ' + n('rate-limited') + ' wait for the hourly limit (50)' : '') + (failed ? ' · failed ' + failed : ''));
+      st.betaSel = {}; loadAll();
+    });
+  }
   function drawBeta() {
     var list = betaFiltered(); var n = Object.keys(st.betaSel).filter(function (k) { return st.betaSel[k]; }).length;
-    return '<section class="panel"><label class="check"><input type="checkbox" data-bf="notInvited"' + (st.bf.notInvited ? ' checked' : '') + '> Only people not invited yet</label>' +
+    var problem = st.mail && st.mail.problem ? st.mail.problem : '';
+    var why = problem ? 'Email isn\'t sending: ' + problem + '. Add the secret in Supabase (docs/UPGRADE_server_update.md, step 3).' : !st.optin ? 'Save the Google Play opt-in link first (above).' : !n ? 'Select people first.' : '';
+    return '<section class="panel" id="beta-email"><h2 style="font-size:1.2rem">Invite emails</h2>' +
+      (problem ? '<p class="notice bad" id="mail-setup">' + esc(problem) + ': no beta email (confirmation or invite) is sent until it is set up. ' + (problem.indexOf('mailing address') >= 0 ? 'Canada\'s anti-spam law needs your mailing address in every email: add the BETA_MAILING_ADDRESS secret.' : 'Add the RESEND_API_KEY secret.') + '</p>' : '') +
+      '<label>Google Play opt-in link (Play Console → Test and release → Testing → Closed testing → your track → Testers → "Join on the web")<input id="optin" type="url" inputmode="url" placeholder="https://play.google.com/apps/testing/…" value="' + esc(st.optin) + '"></label>' +
+      '<div class="btns"><button class="btn" data-b="saveoptin">Save link</button></div>' +
+      '<label class="check"><input type="checkbox" data-bf="plus"' + (st.plus ? ' checked' : '') + '> Also give free Plus (tester access until Dec 31, 2027; anyone already there is left as they are)</label>' +
+      '<div class="btns"><button class="btn primary" data-b="sendinvite"' + (why || st.sending ? ' disabled' : '') + '>' + (st.sending ? 'Sending…' : 'Send invite email (' + n + ')') + '</button><button class="btn" data-b="sendagain"' + (why || st.sending ? ' disabled' : '') + '>Send again</button></div>' +
+      (why ? '<p class="muted small" id="invite-why">' + esc(why) + '</p>' : '') +
+      '<p class="muted small">Each person gets the invite once ("Send again" sends it to people already invited). At most 50 beta emails an hour. People who used "stop emailing me" never get another one. The emails come from support@maplebooksoftware.com through Resend.</p></section>' +
+      '<section class="panel"><label class="check"><input type="checkbox" data-bf="notInvited"' + (st.bf.notInvited ? ' checked' : '') + '> Only people not invited yet</label>' +
       '<div class="btns"><button class="btn primary" data-b="copy">Copy all emails (' + list.length + ')</button><button class="btn" data-b="invite"' + (n ? '' : ' disabled') + '>Mark selected as invited</button><button class="btn" data-b="uninvite"' + (n ? '' : ' disabled') + '>Mark selected as not invited</button><button class="btn" data-b="csv">Download CSV</button><button class="btn danger" data-b="delete"' + (n ? '' : ' disabled') + '>Delete selected</button></div>' +
-      '<p class="muted small">"Copy all emails" gives a comma-separated list for Play Console → Testing → Closed testing → Testers → email list.</p></section>' +
+      '<p class="muted small">"Copy all emails" gives a comma-separated list for Play Console → Test and release → Testing → Closed testing → your track → Testers → email list.</p></section>' +
       '<section class="panel"><label class="check"><input type="checkbox" data-b="selall"' + (list.length && list.every(function (b) { return st.betaSel[b.id]; }) ? ' checked' : '') + '> Select all shown</label>' +
-      '<div class="table-wrap"><table><thead><tr><th></th><th>Email</th><th>Name</th><th>Prov.</th><th>Android</th><th>Lang</th><th>Signed up</th><th>Invited</th></tr></thead><tbody>' +
-      list.map(function (b) { return '<tr><td><input type="checkbox" data-bsel="' + esc(b.id) + '"' + (st.betaSel[b.id] ? ' checked' : '') + ' aria-label="Select ' + esc(b.email) + '"></td><td>' + esc(b.email) + '</td><td>' + esc(b.first_name || '') + '</td><td>' + esc(b.province || '') + '</td><td>' + (b.android === true ? 'Yes' : b.android === false ? 'No' : '') + '</td><td>' + esc(b.lang) + '</td><td>' + esc(String(b.created_at).slice(0, 10)) + '</td><td>' + (b.invited_at ? esc(String(b.invited_at).slice(0, 10)) : '') + '</td></tr>'; }).join('') +
+      '<div class="table-wrap"><table><thead><tr><th></th><th>Email</th><th>Name</th><th>Prov.</th><th>Android</th><th>Lang</th><th>Signed up</th><th>Invited</th><th></th></tr></thead><tbody>' +
+      list.map(function (b) { return '<tr><td><input type="checkbox" data-bsel="' + esc(b.id) + '"' + (st.betaSel[b.id] ? ' checked' : '') + ' aria-label="Select ' + esc(b.email) + '"></td><td>' + esc(b.email) + '</td><td>' + esc(b.first_name || '') + '</td><td>' + esc(b.province || '') + '</td><td>' + (b.android === true ? 'Yes' : b.android === false ? 'No' : '') + '</td><td>' + esc(b.lang) + '</td><td>' + esc(String(b.created_at).slice(0, 10)) + '</td><td>' + esc(inviteState(b)) + '</td><td>' + (b.unsubscribed_at || !st.optin ? '' : '<button class="btn small" data-invite1="' + esc(b.id) + '"' + (st.sending ? ' disabled' : '') + '>' + (b.invite_sent_at ? 'Send again' : 'Send invite email') + '</button>') + '</td></tr>'; }).join('') +
       '</tbody></table></div>' + (list.length ? '' : '<p class="muted">Nobody here yet.</p>') + '</section>';
   }
 
@@ -154,6 +193,7 @@
     if (t.dataset.a === 'selall') { filtered().forEach(function (x) { st.sel[x.id] = t.checked; }); draw(); return; }
     if (t.dataset.a === 'version') { st.version = t.value.trim(); return; }
     if (t.dataset.status) { var x = st.items.filter(function (i) { return i.id === t.dataset.status; })[0]; var ta = $('[data-reply="' + t.dataset.status + '"]'); if (ta && !ta.value.trim()) ta.value = template(t.value, x ? x.lang : 'en'); return; }
+    if (t.dataset.bf === 'plus') { st.plus = t.checked; return; }
     if (t.dataset.bf) { st.bf[t.dataset.bf] = t.checked; draw(); return; }
     if (t.dataset.bsel) { st.betaSel[t.dataset.bsel] = t.checked; draw(); return; }
     if (t.dataset.b === 'selall') { betaFiltered().forEach(function (b) { st.betaSel[b.id] = t.checked; }); draw(); }
@@ -201,10 +241,14 @@
       if (b.dataset.x === 'ai') { var txt = forAi(list); window.__lastCopy = txt; (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function () { toast('Copied ' + list.length + ' items. Paste into your AI chat.'); }, function () { download('maplebook-feedback-for-ai-' + stamp() + '.txt', txt, 'text/plain;charset=utf-8'); toast('Copying isn\'t allowed here, so it was downloaded as a .txt file.'); }); }
       return;
     }
+    if (b.dataset.invite1) { var one = st.beta.filter(function (x) { return x.id === b.dataset.invite1; })[0]; sendInvites([b.dataset.invite1], !!(one && one.invite_sent_at)); return; }
     if (b.dataset.b) {
       var bl = betaFiltered(); var bids = Object.keys(st.betaSel).filter(function (k) { return st.betaSel[k]; });
+      if (b.dataset.b === 'saveoptin') { var v = $('#optin').value.trim(); sb.rpc('admin_set_beta_optin', { p_link: v }).then(function (r) { if (r.error) return toast(/bad-link|not a link/.test(r.error.message + (r.error.hint || '')) ? 'That isn\'t an https:// link.' : 'Not saved: ' + r.error.message); st.optin = (r.data && r.data.optin_link) || ''; toast(st.optin ? 'Opt-in link saved' : 'Opt-in link removed'); draw(); }); return; }
+      if (b.dataset.b === 'sendinvite') { sendInvites(bids, false); return; }
+      if (b.dataset.b === 'sendagain') { sendInvites(bids, true); return; }
       if (b.dataset.b === 'copy') { var emails = bl.map(function (x) { return x.email; }).join(', '); window.__lastCopy = emails; (navigator.clipboard ? navigator.clipboard.writeText(emails) : Promise.reject()).then(function () { toast('Copied ' + bl.length + ' emails'); }, function () { prompt('Copy these emails:', emails); }); return; }
-      if (b.dataset.b === 'csv') { var rows = bl.map(function (x) { return { email: x.email, first_name: x.first_name || '', province: x.province || '', android: x.android == null ? '' : x.android ? 'yes' : 'no', lang: x.lang, signed_up: String(x.created_at).slice(0, 10), invited: x.invited_at ? String(x.invited_at).slice(0, 10) : '' }; }); return download('maplebook-beta-' + stamp() + '.csv', toCsv(rows), 'text/csv;charset=utf-8'); }
+      if (b.dataset.b === 'csv') { var rows = bl.map(function (x) { return { email: x.email, first_name: x.first_name || '', province: x.province || '', android: x.android == null ? '' : x.android ? 'yes' : 'no', lang: x.lang, signed_up: String(x.created_at).slice(0, 10), invited: x.invited_at ? String(x.invited_at).slice(0, 10) : '', invite_email: x.invite_status || '', stopped_emails: x.unsubscribed_at ? String(x.unsubscribed_at).slice(0, 10) : '' }; }); return download('maplebook-beta-' + stamp() + '.csv', toCsv(rows), 'text/csv;charset=utf-8'); }
       if (b.dataset.b === 'invite' || b.dataset.b === 'uninvite') { sb.rpc('admin_mark_invited', { p_ids: bids, p_invited: b.dataset.b === 'invite' }).then(function (r) { if (r.error) return toast('Not saved: ' + r.error.message); st.betaSel = {}; toast('Updated ' + bids.length); loadAll(); }); return; }
       if (b.dataset.b === 'delete') { if (!confirm('Delete ' + bids.length + ' sign-up(s) for good?')) return; sb.rpc('admin_delete_beta', { p_ids: bids }).then(function (r) { if (r.error) return toast('Not deleted: ' + r.error.message); st.betaSel = {}; toast('Deleted'); loadAll(); }); }
     }

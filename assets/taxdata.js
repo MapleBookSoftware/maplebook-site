@@ -39,7 +39,7 @@ const TAX_YEARS = {
       craLimits: 'CRA, "MP, DB, RRSP, DPSP, ALDA, TFSA limits, YMPE and the YAMPE"',
       craRrspExcess: 'CRA, "Excess contributions" (RRSPs and related plans)',
       craFhsa: 'CRA, "Participating in your FHSAs" and "First Home Savings Account (FHSA)"',
-      hbp: 'CRA Home Buyers\' Plan rules (Budget 2024 increase), as summarized by TaxTips.ca'
+      hbp: 'CRA, "What is the Home Buyers\' Plan" (withdrawal limit $60,000; repayment start deferred to the fifth year for first withdrawals 2022–2028: Budget 2024 relief for 2022–2025, extended to 2026–2028)'
     },
 
     /* Registered accounts (used by the RRSP / FHSA / TFSA planner and the comparison screen) */
@@ -56,8 +56,12 @@ const TAX_YEARS = {
               source: 'craLimits', verified: 'cra' },
       fhsa: { annualLimit: 8000, lifetimeLimit: 40000, carryForwardMax: 8000, excessTaxPerMonth: 0.01, firstYear: 2023,
               source: 'craFhsa', verified: 'cra' },
+      // Repayments start the second year after the first withdrawal; for a first withdrawal from Jan 1, 2022 to
+      // Dec 31, 2028 they start the fifth year after it: Budget 2024 relief for 2022–2025, extended to 2026–2028
+      // (CRA, "What is the Home Buyers' Plan", checked Oct 27, 2026: a first withdrawal in 2026 repays from 2031)
       hbp: { withdrawalLimit: 60000, repaymentYears: 15, repaymentStartsYearsAfter: 2,
-             source: 'hbp', verified: 'secondary' }
+             deferred: { firstWithdrawalFrom: 2022, firstWithdrawalTo: 2028, repaymentStartsYearsAfter: 5 },
+             source: 'hbp', verified: 'cra' }
     },
 
     federal: {

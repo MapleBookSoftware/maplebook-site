@@ -41,6 +41,21 @@ function cleanInputs(inp) {
 }
 const pos = (n) => Math.max(0, toNum(n));
 
+/* Payroll (T4127 Option 1): tax = rate × A − constant, with the CRA's published constants (K, KP in Table 8.1),
+   which are rounded to whole dollars. Using the exact constant instead made Ontario 1 cent off the CRA's PDOC on
+   some pays (Nov 2 review, 1b: $80,000 biweekly, 188.46 instead of 188.45). */
+function bracketTaxT4127(incomeRaw, brackets) {
+  const A = toNum(incomeRaw); if (A <= 0) return 0;
+  let k = 0, prevTop = 0, prevRate = 0, rate = brackets[0][1];
+  for (let i = 0; i < brackets.length; i++) {
+    const [top, r] = brackets[i];
+    if (i > 0) k += (r - prevRate) * prevTop;
+    rate = r; prevRate = r;
+    if (A <= top) break;
+    prevTop = top;
+  }
+  return rate * A - Math.round(k);
+}
 function bracketTax(incomeRaw, brackets) {
   const income = toNum(incomeRaw);
   let tax = 0, prev = 0;
@@ -155,7 +170,7 @@ function computeTax(rawInp, P = yearData()) {
   if (inp.fedClaim != null && inp.fedClaim !== '') bpaFed = +inp.fedClaim;
   const cea = Math.min(F.canadaEmploymentAmount, emp);
   const fedCreditBase = bpaFed + cea + cppCreditAmt + ei + qpip + pos(inp.fedCreditAmounts);
-  const fedGross = bracketTax(taxable, F.brackets);
+  const fedGross = inp.payroll ? bracketTaxT4127(taxable, F.brackets) : bracketTax(taxable, F.brackets);
   const fedCredits = fedCreditBase * F.creditRate;
   let fedTax = pos(fedGross - fedCredits);
   const abatement = PR.quebec ? fedTax * F.quebecAbatement : 0;
@@ -170,7 +185,7 @@ function computeTax(rawInp, P = yearData()) {
   }
   if (inp.onClaim != null && inp.onClaim !== '') bpaProv = +inp.onClaim;
   const provCreditBase = bpaProv + (PR.quebec ? 0 : cppCreditAmt + ei) + pos(inp.onCreditAmounts);
-  const provGross = bracketTax(taxable, PR.brackets);
+  const provGross = inp.payroll && !PR.quebec ? bracketTaxT4127(taxable, PR.brackets) : bracketTax(taxable, PR.brackets);
   let provCredits = provCreditBase * PR.creditRate;
   if (PR.supplementalCredit && provCreditBase > PR.supplementalCredit.threshold) provCredits += (provCreditBase - PR.supplementalCredit.threshold) * PR.supplementalCredit.rate;
   const provBasic = pos(provGross - provCredits);

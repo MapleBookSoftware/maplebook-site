@@ -12,7 +12,7 @@
   var TYPES = [['problem', 'Problem'], ['idea', 'Idea'], ['question', 'Question'], ['confusing', 'Something confusing']];
   var label = function (list, k) { var f = list.filter(function (x) { return x[0] === k; })[0]; return f ? f[1] : k; };
   var COLS = 'id,created_at,updated_at,status_changed_at,source,type,message,screen,app_version,os_version,lang,screenshot_path,notify,status,reply';
-  var st = { tab: 'feedback', items: [], beta: [], sel: {}, betaSel: {}, f: { status: '', type: '', screen: '', lang: '', q: '', open: false }, bf: { notInvited: true }, version: C.appVersion || '', optin: '', plus: true, sending: false };
+  var st = { tab: 'feedback', items: [], beta: [], sel: {}, betaSel: {}, replyOpen: {}, settings: null, settingsErr: '', uid: null, f: { status: '', type: '', screen: '', lang: '', q: '', open: false }, bf: { notInvited: true }, version: C.appVersion || '', optin: '', plus: true, sending: false };
   var sb = null;
   var app = $('#admin');
   var toast = function (t) { var el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { el.hidden = true; }, 3500); };
@@ -58,6 +58,10 @@
       st.items = r[0].data || []; st.beta = (r[1] && r[1].data) || []; st.optin = (r[2] && r[2].data && r[2].data.optin_link) || '';
       // is email set up? (RESEND_API_KEY and BETA_MAILING_ADDRESS secrets; the page never sees their values)
       st.mail = r[3] && !r[3].error && r[3].data ? r[3].data : null; draw();
+      // 1.0.4 R2: the Notifications tab (the admin's own owner_settings row; loaded on its own so it never blocks the page)
+      Promise.resolve(sb.auth.getSession()).then(function (ss) { st.uid = ss && ss.data && ss.data.session && ss.data.session.user ? ss.data.session.user.id : null; if (!st.uid) return;
+        return Promise.resolve(sb.from('owner_settings').select('*').eq('user_id', st.uid)).then(function (o) { if (o && o.error) st.settingsErr = o.error.message; else st.settings = (o && o.data && o.data[0]) || null; if (st.tab === 'notify') draw(); });
+      }).catch(function (e) { st.settingsErr = String((e && e.message) || e); });
     });
   }
   function filtered() {
@@ -77,45 +81,54 @@
     var keep = {}; $$('[data-reply]').forEach(function (t) { keep['r' + t.dataset.reply] = t.value; }); $$('[data-status]').forEach(function (t) { keep['s' + t.dataset.status] = t.value; });
     var y = window.scrollY;
     drawNow();
-    $$('[data-reply]').forEach(function (t) { if (('r' + t.dataset.reply) in keep) t.value = keep['r' + t.dataset.reply]; }); $$('[data-status]').forEach(function (t) { if (('s' + t.dataset.status) in keep) t.value = keep['s' + t.dataset.status]; });
+    $$('[data-reply]').forEach(function (t) { if (('r' + t.dataset.reply) in keep) { t.value = keep['r' + t.dataset.reply]; if (t.value) t.closest('.reply').hidden = false; } }); $$('[data-status]').forEach(function (t) { if (('s' + t.dataset.status) in keep) t.value = keep['s' + t.dataset.status]; });
     window.scrollTo(0, y);
   }
+  /* 1.0.4 R2: one tidy layout, the same as Settings → Owner in the app: a header with the counts, three tabs
+     (Feedback · Beta sign-ups · Notifications), filters in one row, one list per tab, and actions in a bar that
+     appears only when something is selected. "New feedback" = still Received; "new sign-ups" = not invited yet. */
+  var newFb = function () { return st.items.filter(function (x) { return x.status === 'received'; }).length; };
+  var newBeta = function () { return st.beta.filter(function (b) { return !b.invited_at && !b.unsubscribed_at; }).length; };
   function drawNow() {
-    var unopened = st.items.filter(function (x) { return x.status === 'received'; }).length;
-    app.innerHTML = '<div class="bar"><h1>Owner page</h1><button class="btn" data-a="signout">Sign out</button></div>' +
-      '<div class="tabs" role="tablist"><button role="tab" aria-selected="' + (st.tab === 'feedback') + '" data-tab="feedback">Feedback (' + st.items.length + (unopened ? ', ' + unopened + ' new' : '') + ')</button>' +
-      '<button role="tab" aria-selected="' + (st.tab === 'beta') + '" data-tab="beta">Beta sign-ups (' + st.beta.length + ')</button></div>' +
-      '<div id="tabbody">' + (st.tab === 'feedback' ? drawFeedback() : drawBeta()) + '</div>';
+    var nf = newFb(), nb = newBeta();
+    app.innerHTML = '<div class="bar"><h1>Owner page</h1><button class="btn small" data-a="signout">Sign out</button></div>' +
+      '<div class="own-counts"><button class="own-count' + (nf ? ' on' : '') + '" data-goto="feedback"><b>' + nf + '</b><span>new feedback</span></button>' +
+      '<button class="own-count' + (nb ? ' on' : '') + '" data-goto="beta"><b>' + nb + '</b><span>' + (nb === 1 ? 'new sign-up' : 'new sign-ups') + '</span></button></div>' +
+      '<div class="tabs" role="tablist"><button role="tab" aria-selected="' + (st.tab === 'feedback') + '" data-tab="feedback">Feedback (' + st.items.length + ')</button>' +
+      '<button role="tab" aria-selected="' + (st.tab === 'beta') + '" data-tab="beta">Beta sign-ups (' + st.beta.length + ')</button>' +
+      '<button role="tab" aria-selected="' + (st.tab === 'notify') + '" data-tab="notify">Notifications</button></div>' +
+      '<div id="tabbody">' + (st.tab === 'feedback' ? drawFeedback() : st.tab === 'beta' ? drawBeta() : drawNotify()) + '</div>';
   }
   function drawFeedback() {
     var list = filtered(); var f = st.f;
     var screens = Array.from(new Set(st.items.map(function (x) { return x.screen || ''; }).filter(Boolean))).sort().map(function (s) { return [s, s]; });
     var n = Object.keys(st.sel).filter(function (k) { return st.sel[k]; }).length;
-    return '<section class="panel filters"><div class="grid4">' +
-      '<label>Status<select data-f="status">' + opts(STATUS, f.status, 'All') + '</select></label>' +
-      '<label>Type<select data-f="type">' + opts(TYPES, f.type, 'All') + '</select></label>' +
-      '<label>Screen<select data-f="screen">' + opts(screens, f.screen, 'All') + '</select></label>' +
-      '<label>Language<select data-f="lang">' + opts([['en', 'English'], ['fr', 'French']], f.lang, 'All') + '</select></label></div>' +
-      '<label class="search">Search<input type="search" data-f="q" value="' + esc(f.q) + '" placeholder="Words in the message or reply"></label>' +
-      '<label class="check"><input type="checkbox" data-f="open"' + (f.open ? ' checked' : '') + '> Only items not yet Done or Not planned</label>' +
-      '<label class="ver">Version for "Done" replies<input data-a="version" value="' + esc(st.version) + '" size="8"></label></section>' +
-      '<section class="panel exports"><b>' + list.length + ' shown</b><div class="btns">' +
-      '<button class="btn" data-x="csv">Download CSV</button><button class="btn" data-x="json">Download JSON</button><button class="btn" data-x="ai">Copy for AI</button><button class="btn" data-x="txt">Download .txt for AI</button></div>' +
-      '<p class="muted small">Exports use the filters above. They never include names, emails, account ids or IP data.</p></section>' +
-      '<section class="panel bulk"><label class="check"><input type="checkbox" data-a="selall"' + (list.length && list.every(function (x) { return st.sel[x.id]; }) ? ' checked' : '') + '> Select all shown</label>' +
-      '<span>' + n + ' selected</span><select data-a="bulkstatus">' + opts(STATUS, '', 'Set status to…') + '</select>' +
-      '<label class="check"><input type="checkbox" data-a="bulkreply" checked> Add the standard reply where there is none</label><button class="btn" data-a="bulk"' + (n ? '' : ' disabled') + '>Apply to selected</button></section>' +
-      (list.length ? list.map(card).join('') : '<p class="panel muted">Nothing matches these filters.</p>');
+    return '<div class="filters" role="group" aria-label="Filters">' +
+      '<input type="search" data-f="q" value="' + esc(f.q) + '" placeholder="Search" aria-label="Search the message or reply">' +
+      '<select data-f="status" aria-label="Status">' + opts(STATUS, f.status, 'Any status') + '</select>' +
+      '<select data-f="type" aria-label="Type">' + opts(TYPES, f.type, 'Any type') + '</select>' +
+      '<select data-f="screen" aria-label="Screen">' + opts(screens, f.screen, 'Any screen') + '</select>' +
+      '<select data-f="lang" aria-label="Language">' + opts([['en', 'English'], ['fr', 'French']], f.lang, 'Any language') + '</select>' +
+      '<label class="check"><input type="checkbox" data-f="open"' + (f.open ? ' checked' : '') + '> Open only</label></div>' +
+      '<div class="listhead"><label class="check"><input type="checkbox" data-a="selall"' + (list.length && list.every(function (x) { return st.sel[x.id]; }) ? ' checked' : '') + '> All shown (' + list.length + ')</label>' +
+      '<span class="tools"><button class="btn small ghost" data-x="ai">Copy for AI</button><button class="btn small ghost" data-x="txt">.txt for AI</button><button class="btn small ghost" data-x="csv">CSV</button><button class="btn small ghost" data-x="json">JSON</button></span></div>' +
+      '<div class="selbar" role="toolbar" aria-label="Selected feedback"' + (n ? '' : ' hidden') + '><b>' + n + ' selected</b><select data-a="bulkstatus" aria-label="New status">' + opts(STATUS, '', 'Set status…') + '</select>' +
+      '<label class="check"><input type="checkbox" data-a="bulkreply" checked> Standard reply where none</label>' +
+      '<span class="go"><button class="btn small ghost" data-a="selnone">Clear</button><button class="btn small primary" data-a="bulk"' + (n ? '' : ' disabled') + '>Apply</button></span></div>' +
+      '<div class="list">' + (list.length ? list.map(card).join('') : '<p class="muted">Nothing matches these filters.</p>') + '</div>' +
+      '<p class="muted small foot">Exports use the filters. They never include names, emails, account ids or IP data. <label class="ver">Version in "Done" replies <input data-a="version" value="' + esc(st.version) + '" size="7"></label></p>';
   }
   function card(x) {
-    return '<article class="panel item" data-id="' + esc(x.id) + '"><div class="item-top"><label class="check"><input type="checkbox" data-sel="' + esc(x.id) + '"' + (st.sel[x.id] ? ' checked' : '') + '><span class="visually-hidden">Select</span></label>' +
+    var open = !!(x.reply || st.replyOpen[x.id]);
+    return '<article class="item' + (st.sel[x.id] ? ' picked' : '') + '" data-id="' + esc(x.id) + '"><div class="item-top"><label class="pick"><input type="checkbox" data-sel="' + esc(x.id) + '"' + (st.sel[x.id] ? ' checked' : '') + ' aria-label="Select"></label>' +
       '<span class="tag t-' + esc(x.type) + '">' + esc(label(TYPES, x.type)) + '</span><span class="tag st-' + esc(x.status) + '">' + esc(label(STATUS, x.status)) + '</span>' +
-      '<span class="muted small">' + esc(new Date(x.created_at).toLocaleString('en-CA', { dateStyle: 'medium', timeStyle: 'short' })) + ' · ' + esc(x.screen || 'no screen') + ' · ' + esc(x.source) + ' · ' + esc(x.lang.toUpperCase()) + (x.app_version ? ' · v' + esc(x.app_version) : '') + (x.os_version ? ' · ' + esc(x.os_version) : '') + (x.notify ? ' · wants updates' : '') + '</span></div>' +
+      '<span class="muted small when">' + esc(new Date(x.created_at).toLocaleString('en-CA', { dateStyle: 'medium', timeStyle: 'short' })) + '</span></div>' +
       '<p class="msg">' + esc(x.message) + '</p>' +
-      (x.screenshot_path ? '<p><button class="btn small" data-shot="' + esc(x.screenshot_path) + '">See screenshot</button></p><div class="shot" id="shot-' + esc(x.id) + '"></div>' : '') +
-      '<div class="edit"><label>Status<select data-status="' + esc(x.id) + '">' + opts(STATUS, x.status) + '</select></label>' +
-      '<label class="reply">Reply (the sender sees this in the app or on the website)<textarea data-reply="' + esc(x.id) + '" rows="2" maxlength="1000">' + esc(x.reply || '') + '</textarea></label>' +
-      '<div class="btns"><button class="btn primary" data-save="' + esc(x.id) + '">Save</button><button class="btn danger" data-del="' + esc(x.id) + '">Delete</button></div></div></article>';
+      '<p class="muted small meta">' + esc(x.screen || 'no screen') + ' · ' + esc(x.source) + ' · ' + esc(x.lang.toUpperCase()) + (x.app_version ? ' · v' + esc(x.app_version) : '') + (x.os_version ? ' · ' + esc(x.os_version) : '') + (x.notify ? ' · wants updates' : '') + '</p>' +
+      (x.screenshot_path ? '<button class="btn small ghost" data-shot="' + esc(x.screenshot_path) + '">See screenshot</button><div class="shot" id="shot-' + esc(x.id) + '"></div>' : '') +
+      '<div class="reply"' + (open ? '' : ' hidden') + '><label>Reply (the sender sees this in the app or on the website)<textarea data-reply="' + esc(x.id) + '" rows="2" maxlength="1000">' + esc(x.reply || '') + '</textarea></label></div>' +
+      '<div class="actions"><select data-status="' + esc(x.id) + '" aria-label="Status">' + opts(STATUS, x.status) + '</select>' + (open ? '' : '<button class="btn small ghost" data-replyopen="' + esc(x.id) + '">Reply</button>') +
+      '<span class="end"><button class="btn small ghost danger" data-del="' + esc(x.id) + '">Delete</button><button class="btn small primary" data-save="' + esc(x.id) + '">Save</button></span></div></article>';
   }
   /* item 26: invite emails. "Invited Oct 27 · email sent" / "email failed: <reason>" */
   var mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -145,24 +158,39 @@
   function drawBeta() {
     var list = betaFiltered(); var n = Object.keys(st.betaSel).filter(function (k) { return st.betaSel[k]; }).length;
     var problem = st.mail && st.mail.problem ? st.mail.problem : '';
-    var why = problem ? 'Email isn\'t sending: ' + problem + '. Add the secret in Supabase (docs/UPGRADE_server_update.md, step 3).' : !st.optin ? 'Save the Google Play opt-in link first (above).' : !n ? 'Select people first.' : '';
-    return '<section class="panel" id="beta-email"><h2 style="font-size:1.2rem">Invite emails</h2>' +
+    var why = problem ? 'Email isn\'t sending: ' + problem + '. Add the secret in Supabase (docs/UPGRADE_server_update.md, step 3).' : !st.optin ? 'Save the Google Play opt-in link first.' : !n ? 'Select people first.' : '';
+    var ready = !problem && st.optin;
+    return '<section class="card" id="beta-email"><div class="card-head"><h2>Invite emails</h2><span class="tag ' + (ready ? 'st-done' : 'st-received') + '">' + (ready ? 'Ready' : problem ? 'Email not working' : 'Opt-in link needed') + '</span></div>' +
       (problem ? '<p class="notice bad" id="mail-setup">' + esc(problem) + ': no beta email (confirmation or invite) is sent until it is set up. ' + (problem.indexOf('mailing address') >= 0 ? 'Canada\'s anti-spam law needs your mailing address in every email: add the BETA_MAILING_ADDRESS secret.' : 'Add the RESEND_API_KEY secret.') + '</p>' : '') +
-      '<label>Google Play opt-in link (Play Console → Test and release → Testing → Closed testing → your track → Testers → "Join on the web")<input id="optin" type="url" inputmode="url" placeholder="https://play.google.com/apps/testing/…" value="' + esc(st.optin) + '"></label>' +
-      '<div class="btns"><button class="btn" data-b="saveoptin">Save link</button></div>' +
+      '<div class="inline"><input id="optin" type="url" inputmode="url" placeholder="https://play.google.com/apps/testing/…" value="' + esc(st.optin) + '" aria-label="Google Play opt-in link"><button class="btn small" data-b="saveoptin">Save link</button></div>' +
+      '<p class="muted small">Opt-in link: Play Console → Test and release → Testing → Closed testing → your track → Testers → "Join on the web".</p>' +
       '<label class="check"><input type="checkbox" data-bf="plus"' + (st.plus ? ' checked' : '') + '> Also give free Plus (tester access until Dec 31, 2027; anyone already there is left as they are)</label>' +
-      '<div class="btns"><button class="btn primary" data-b="sendinvite"' + (why || st.sending ? ' disabled' : '') + '>' + (st.sending ? 'Sending…' : 'Send invite email (' + n + ')') + '</button><button class="btn" data-b="sendagain"' + (why || st.sending ? ' disabled' : '') + '>Send again</button></div>' +
       (why ? '<p class="muted small" id="invite-why">' + esc(why) + '</p>' : '') +
-      '<p class="muted small">Each person gets the invite once ("Send again" sends it to people already invited). At most 50 beta emails an hour. People who used "stop emailing me" never get another one. The emails come from support@maplebooksoftware.com through Resend.</p></section>' +
-      '<section class="panel"><label class="check"><input type="checkbox" data-bf="notInvited"' + (st.bf.notInvited ? ' checked' : '') + '> Only people not invited yet</label>' +
-      '<div class="btns"><button class="btn primary" data-b="copy">Copy all emails (' + list.length + ')</button><button class="btn" data-b="invite"' + (n ? '' : ' disabled') + '>Mark selected as invited</button><button class="btn" data-b="uninvite"' + (n ? '' : ' disabled') + '>Mark selected as not invited</button><button class="btn" data-b="csv">Download CSV</button><button class="btn danger" data-b="delete"' + (n ? '' : ' disabled') + '>Delete selected</button></div>' +
-      '<p class="muted small">"Copy all emails" gives a comma-separated list for Play Console → Test and release → Testing → Closed testing → your track → Testers → email list.</p></section>' +
-      '<section class="panel"><label class="check"><input type="checkbox" data-b="selall"' + (list.length && list.every(function (b) { return st.betaSel[b.id]; }) ? ' checked' : '') + '> Select all shown</label>' +
-      '<div class="table-wrap"><table><thead><tr><th></th><th>Email</th><th>Name</th><th>Prov.</th><th>Android</th><th>Lang</th><th>Signed up</th><th>Invited</th><th></th></tr></thead><tbody>' +
-      list.map(function (b) { return '<tr><td><input type="checkbox" data-bsel="' + esc(b.id) + '"' + (st.betaSel[b.id] ? ' checked' : '') + ' aria-label="Select ' + esc(b.email) + '"></td><td>' + esc(b.email) + '</td><td>' + esc(b.first_name || '') + '</td><td>' + esc(b.province || '') + '</td><td>' + (b.android === true ? 'Yes' : b.android === false ? 'No' : '') + '</td><td>' + esc(b.lang) + '</td><td>' + esc(String(b.created_at).slice(0, 10)) + '</td><td>' + esc(inviteState(b)) + '</td><td>' + (b.unsubscribed_at || !st.optin ? '' : '<button class="btn small" data-invite1="' + esc(b.id) + '"' + (st.sending ? ' disabled' : '') + '>' + (b.invite_sent_at ? 'Send again' : 'Send invite email') + '</button>') + '</td></tr>'; }).join('') +
-      '</tbody></table></div>' + (list.length ? '' : '<p class="muted">Nobody here yet.</p>') + '</section>';
+      '<details class="more"><summary>How invites work</summary><p class="muted small">Each person gets the invite once ("Send again" sends it to people already invited). At most 50 beta emails an hour. People who used "stop emailing me" never get another one. The emails come from support@maplebooksoftware.com through Resend.</p>' +
+      '<p class="muted small">"Copy all emails" gives a comma-separated list for Play Console → Test and release → Testing → Closed testing → your track → Testers → email list.</p></details></section>' +
+      '<div class="filters" role="group" aria-label="Filters"><label class="check"><input type="checkbox" data-bf="notInvited"' + (st.bf.notInvited ? ' checked' : '') + '> Only people not invited yet</label></div>' +
+      '<div class="listhead"><label class="check"><input type="checkbox" data-b="selall"' + (list.length && list.every(function (b) { return st.betaSel[b.id]; }) ? ' checked' : '') + '> All shown (' + list.length + ')</label>' +
+      '<span class="tools"><button class="btn small ghost" data-b="copy">Copy all emails (' + list.length + ')</button><button class="btn small ghost" data-b="csv">CSV</button></span></div>' +
+      '<div class="selbar" role="toolbar" aria-label="Selected sign-ups"' + (n ? '' : ' hidden') + '><b>' + n + ' selected</b>' +
+      '<button class="btn small primary" data-b="sendinvite"' + (why || st.sending ? ' disabled' : '') + '>' + (st.sending ? 'Sending…' : 'Send invite email (' + n + ')') + '</button><button class="btn small" data-b="sendagain"' + (why || st.sending ? ' disabled' : '') + '>Send again</button>' +
+      '<button class="btn small" data-b="invite"' + (n ? '' : ' disabled') + '>Mark invited</button><button class="btn small" data-b="uninvite"' + (n ? '' : ' disabled') + '>Mark not invited</button>' +
+      '<span class="go"><button class="btn small ghost" data-b="selnone">Clear</button><button class="btn small ghost danger" data-b="delete"' + (n ? '' : ' disabled') + '>Delete</button></span></div>' +
+      '<div class="list">' + list.map(function (b) { return '<div class="person' + (st.betaSel[b.id] ? ' picked' : '') + '"><label class="pick"><input type="checkbox" data-bsel="' + esc(b.id) + '"' + (st.betaSel[b.id] ? ' checked' : '') + ' aria-label="Select ' + esc(b.email) + '"></label>' +
+        '<div class="who"><b>' + esc(b.email) + '</b><span class="muted small">' + esc(b.first_name || '—') + ' · ' + esc(b.province || '—') + ' · ' + (b.android === true ? 'Android' : b.android === false ? 'no Android' : '—') + ' · ' + esc(String(b.lang).toUpperCase()) + ' · signed up ' + esc(String(b.created_at).slice(0, 10)) + (inviteState(b) ? ' · ' + esc(inviteState(b)) : '') + '</span></div>' +
+        (b.unsubscribed_at || !st.optin ? '' : '<button class="btn small ghost" data-invite1="' + esc(b.id) + '"' + (st.sending ? ' disabled' : '') + '>' + (b.invite_sent_at ? 'Send again' : 'Send invite email') + '</button>') + '</div>'; }).join('') +
+      (list.length ? '' : '<p class="muted">Nobody here yet.</p>') + '</div>';
   }
-
+  /* 1.0.4 R2: Notifications, as in the app (email choices; push is turned on from the phone) */
+  var CHOICES = [['each', 'Every new item'], ['daily', 'Daily summary (about 8 am)'], ['off', 'Off']];
+  function drawNotify() {
+    if (st.settingsErr) return '<p class="notice bad">Couldn\'t load your notification choices: ' + esc(st.settingsErr) + '</p>';
+    var s = st.settings || { emails: ['support@maplebooksoftware.com'], email_feedback: 'each', email_beta: 'each', push_feedback: 'off', push_beta: 'off' };
+    return '<section class="card"><h2>Email</h2><label>Send to (up to 5 addresses, separated by commas)<input id="n-emails" type="text" inputmode="email" value="' + esc((s.emails || []).join(', ')) + '"></label>' +
+      '<div class="pair"><label>New feedback<select id="n-ef">' + opts(CHOICES, s.email_feedback) + '</select></label><label>New beta sign-ups<select id="n-eb">' + opts(CHOICES, s.email_beta) + '</select></label></div>' +
+      '<p class="muted small">An email shows the type, screen, app version and the first 300 characters of a message, with a link to this page. At most 20 an hour; the rest go into the daily summary. Never any budget data.</p></section>' +
+      '<section class="card"><h2>Push notifications</h2><p class="muted small">Turned on from your phone: MapleBook → Settings → Owner → Notifications (docs/OWNER_PUSH_SETUP.md). Now: new feedback ' + esc(label(CHOICES, s.push_feedback || 'off')) + ', new sign-ups ' + esc(label(CHOICES, s.push_beta || 'off')) + '.</p></section>' +
+      '<div class="save"><button class="btn primary" data-a="savenotify">Save</button></div>';
+  }
   /* ---------- exports ---------- */
   var csvCell = function (v) { v = v == null ? '' : String(v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
   function feedbackRows(list) { return list.map(function (x) { return { id: x.id, created_at: x.created_at, status: x.status, type: x.type, screen: x.screen || '', app_version: x.app_version || '', os_version: x.os_version || '', lang: x.lang, source: x.source, wants_updates: x.notify, has_screenshot: !!x.screenshot_path, message: x.message, reply: x.reply || '' }; }); }
@@ -192,7 +220,7 @@
     if (t.dataset.sel) { st.sel[t.dataset.sel] = t.checked; draw(); return; }
     if (t.dataset.a === 'selall') { filtered().forEach(function (x) { st.sel[x.id] = t.checked; }); draw(); return; }
     if (t.dataset.a === 'version') { st.version = t.value.trim(); return; }
-    if (t.dataset.status) { var x = st.items.filter(function (i) { return i.id === t.dataset.status; })[0]; var ta = $('[data-reply="' + t.dataset.status + '"]'); if (ta && !ta.value.trim()) ta.value = template(t.value, x ? x.lang : 'en'); return; }
+    if (t.dataset.status) { var x = st.items.filter(function (i) { return i.id === t.dataset.status; })[0]; var ta = $('[data-reply="' + t.dataset.status + '"]'); if (ta && !ta.value.trim()) ta.value = template(t.value, x ? x.lang : 'en'); if (ta && ta.value) { ta.closest('.reply').hidden = false; var ob = $('[data-replyopen="' + t.dataset.status + '"]'); if (ob) ob.remove(); } return; }
     if (t.dataset.bf === 'plus') { st.plus = t.checked; return; }
     if (t.dataset.bf) { st.bf[t.dataset.bf] = t.checked; draw(); return; }
     if (t.dataset.bsel) { st.betaSel[t.dataset.bsel] = t.checked; draw(); return; }
@@ -202,6 +230,17 @@
   app.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     if (b.dataset.tab) { st.tab = b.dataset.tab; draw(); return; }
+    if (b.dataset.goto) { st.tab = b.dataset.goto; if (b.dataset.goto === 'feedback') st.f.status = 'received'; else st.bf.notInvited = true; draw(); return; }
+    if (b.dataset.replyopen) { st.replyOpen[b.dataset.replyopen] = true; var rb = $('[data-reply="' + b.dataset.replyopen + '"]'); if (rb) { rb.closest('.reply').hidden = false; b.remove(); rb.focus(); } return; }
+    if (b.dataset.a === 'selnone') { st.sel = {}; draw(); return; }
+    if (b.dataset.b === 'selnone') { st.betaSel = {}; draw(); return; }
+    if (b.dataset.a === 'savenotify') {
+      var emails = $('#n-emails').value.split(/[,;\s]+/).map(function (x) { return x.trim().toLowerCase(); }).filter(Boolean);
+      if (emails.length > 5 || emails.some(function (x) { return !/^[^@\s,]+@[^@\s,]+\.[^@\s,]+$/.test(x); })) return toast('Check the email addresses (up to 5)');
+      var row = { user_id: st.uid, emails: emails, email_feedback: $('#n-ef').value, email_beta: $('#n-eb').value, updated_at: new Date().toISOString() };
+      Promise.resolve(sb.from('owner_settings').upsert(row, { onConflict: 'user_id' })).then(function (r) { if (r && r.error) return toast('Not saved: ' + r.error.message); st.settings = Object.assign({}, st.settings || {}, row); toast('Notification choices saved'); });
+      return;
+    }
     if (b.dataset.a === 'signout') { sb.auth.signOut().then(function () { signInView(); }); return; }
     if (b.dataset.save) {
       var id = b.dataset.save; var status = $('[data-status="' + id + '"]').value; var reply = $('[data-reply="' + id + '"]').value;

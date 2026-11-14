@@ -62,6 +62,8 @@
       Promise.resolve(sb.auth.getSession()).then(function (ss) { st.uid = ss && ss.data && ss.data.session && ss.data.session.user ? ss.data.session.user.id : null; if (!st.uid) return;
         return Promise.resolve(sb.from('owner_settings').select('*').eq('user_id', st.uid)).then(function (o) { if (o && o.error) st.settingsErr = o.error.message; else st.settings = (o && o.data && o.data[0]) || null; if (st.tab === 'notify') draw(); });
       }).catch(function (e) { st.settingsErr = String((e && e.message) || e); });
+      // 1.0.5: the bank sync log (counts only); a server without bank.sql 1.0.5 just hides the tab
+      Promise.resolve(sb.rpc('owner_bank_log', { p_limit: 100 })).then(function (b) { st.bankLog = b && !b.error && b.data ? b.data : null; if (st.bankLog) draw(); }, function () { st.bankLog = null; });
     });
   }
   function filtered() {
@@ -96,8 +98,9 @@
       '<button class="own-count' + (nb ? ' on' : '') + '" data-goto="beta"><b>' + nb + '</b><span>' + (nb === 1 ? 'new sign-up' : 'new sign-ups') + '</span></button></div>' +
       '<div class="tabs" role="tablist"><button role="tab" aria-selected="' + (st.tab === 'feedback') + '" data-tab="feedback">Feedback (' + st.items.length + ')</button>' +
       '<button role="tab" aria-selected="' + (st.tab === 'beta') + '" data-tab="beta">Beta sign-ups (' + st.beta.length + ')</button>' +
+      (st.bankLog ? '<button role="tab" aria-selected="' + (st.tab === 'bank') + '" data-tab="bank">Bank</button>' : '') +
       '<button role="tab" aria-selected="' + (st.tab === 'notify') + '" data-tab="notify">Notifications</button></div>' +
-      '<div id="tabbody">' + (st.tab === 'feedback' ? drawFeedback() : st.tab === 'beta' ? drawBeta() : drawNotify()) + '</div>';
+      '<div id="tabbody">' + (st.tab === 'feedback' ? drawFeedback() : st.tab === 'beta' ? drawBeta() : st.tab === 'bank' && st.bankLog ? drawBank() : drawNotify()) + '</div>';
   }
   function drawFeedback() {
     var list = filtered(); var f = st.f;
@@ -182,6 +185,17 @@
   }
   /* 1.0.4 R2: Notifications, as in the app (email choices; push is turned on from the phone) */
   var CHOICES = [['each', 'Every new item'], ['daily', 'Daily summary (about 8 am)'], ['off', 'Off']];
+  /* 1.0.5 item 2: each bank sync's counts (no names, amounts or account ids) and the waiting list size */
+  function drawBank() {
+    var g = st.bankLog || {}, rows = g.syncs || [];
+    var src = { app: 'App', daily: 'Daily', webhook: 'Bank' };
+    return '<div class="pair"><div class="card"><b>' + (+g.connections || 0) + '</b><span class="muted">connected</span></div><div class="card"><b>' + (+g.waitlist || 0) + '</b><span class="muted">waiting</span></div><div class="card"><b>' + (+g.waitlist_paid || 0) + '</b><span class="muted">waiting, paying</span></div></div>' +
+      '<p class="muted">Each sync: pages read from the bank, then transactions added, changed and removed. No names, amounts or account numbers.</p>' +
+      (rows.map(function (r) { var bad = r.status && r.status !== 'ok';
+        return '<article class="card"><div class="card-head"><b>' + esc(r.bank || 'Bank') + ' <span class="muted">#' + esc(r.conn || '') + '</span></b><span class="muted">' + esc(src[r.source] || r.source || '') + ' · ' + esc(new Date(r.at).toLocaleString('en-CA', { dateStyle: 'medium', timeStyle: 'short' })) + '</span></div>' +
+          (bad ? '<p class="notice bad">' + esc(r.error_code || r.status).replace(/_/g, '_<wbr>') + '</p>' : '') +
+          '<p>' + (+r.pages || 0) + ' pages · +' + (+r.added || 0) + ' added · ' + (+r.modified || 0) + ' changed · −' + (+r.removed || 0) + ' removed · ' + (+r.accounts || 0) + ' accounts' + (r.history === 'complete' ? ' · All history' : r.history === 'pending' ? ' · History still coming' : '') + '</p></article>'; }).join('') || '<p class="muted">No syncs yet.</p>');
+  }
   function drawNotify() {
     if (st.settingsErr) return '<p class="notice bad">Couldn\'t load your notification choices: ' + esc(st.settingsErr) + '</p>';
     var s = st.settings || { emails: ['support@maplebooksoftware.com'], email_feedback: 'each', email_beta: 'each', push_feedback: 'off', push_beta: 'off' };

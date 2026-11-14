@@ -1,0 +1,12 @@
+MapleBook
+Copyright (c) 2026 Maple Book Software. All rights reserved.
+
+This software, its source code, design, text, artwork (including the MapleBook logo and the "Maple" character) and
+documentation are proprietary. No licence is granted to copy, modify, distribute, sell, sublicense, reverse engineer
+or create derivative works from any part of it, except as set out in the MapleBook Terms of Use
+(https://maplebooksoftware.com/terms.html) or with the written permission of Maple Book Software.
+
+"MapleBook" and the Maple character are trademarks of Maple Book Software.
+
+Third-party components keep their own licences (see the vendor folders).
+Contact: support@maplebooksoftware.com

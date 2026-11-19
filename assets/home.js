@@ -42,7 +42,11 @@
   var calc = document.getElementById('month');
   if (calc) {
     var ins = [].slice.call(calc.querySelectorAll('input[type=range]'));
-    var fmt = function (n) { return (n < 0 ? '−$' : '$') + Math.abs(Math.round(n)).toLocaleString('en-CA'); };
+    var fr = (document.documentElement.lang || '').slice(0, 2) === 'fr';
+    var fmt = fr ? function (n) { return (n < 0 ? '−' : '') + Math.abs(Math.round(n)).toLocaleString('fr-CA') + ' $'; }
+                 : function (n) { return (n < 0 ? '−$' : '$') + Math.abs(Math.round(n)).toLocaleString('en-CA'); };
+    var L = fr ? [' par jour', 'Il vous manquerait de l\'argent ce mois-ci. Il faut couper quelque part.', 'Serré. Une facture imprévue et il vous manque de l\'argent.', 'Correct. Il y a de la place pour un petit objectif.', 'De la marge. Donnez une mission à cet argent.']
+               : [' a day', 'You would be short this month. Something has to give.', 'Tight. One surprise bill and you are short.', 'Okay. There is room for a small goal.', 'Breathing room. Give that money a job.'];
     function upd() {
       var v = {}, spent = 0;
       ins.forEach(function (i) {
@@ -52,11 +56,8 @@
       });
       var left = v.pay - spent;
       calc.querySelector('.left').textContent = fmt(left);
-      calc.querySelector('.perday').textContent = fmt(left / 30.4) + ' a day';
-      calc.querySelector('.verdict').textContent = left < 0 ? 'You would be short this month. Something has to give.'
-        : left < v.pay * 0.05 ? 'Tight. One surprise bill and you are short.'
-        : left < v.pay * 0.15 ? 'Okay. There is room for a small goal.'
-        : 'Breathing room. Give that money a job.';
+      calc.querySelector('.perday').textContent = fmt(left / 30.4) + L[0];
+      calc.querySelector('.verdict').textContent = left < 0 ? L[1] : left < v.pay * 0.05 ? L[2] : left < v.pay * 0.15 ? L[3] : L[4];
       calc.classList.toggle('neg', left < 0);
       var bar = calc.querySelector('.stack');
       ins.forEach(function (i) {
